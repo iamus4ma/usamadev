@@ -1,5 +1,3 @@
-// updated
-
 
 import './App.css';
 import About from './components/about/About';

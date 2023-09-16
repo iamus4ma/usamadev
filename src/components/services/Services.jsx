@@ -17,7 +17,7 @@ const Services = () => {
           <div>
             <i className="uil uil-web-grid services__icon"></i>
             <h3 className="services__title">
-              Web <br /> Designer
+              Complete <br /> Website
             </h3>
           </div>
           <span className="services__button" onClick={() => toggleTab(1)}>
@@ -30,7 +30,7 @@ const Services = () => {
               <i onClick={() => toggleTab(0)} className="uil uil-times services__modal-close"></i>
               <h3 className="services__modal-title">Web Designer</h3>
               <p className="services__modal-description">
-                Service with more than 3 years of experience.Providing quality
+                Service with more than 2 years of experience.Providing quality
                 work to clients.
               </p>
 
@@ -38,19 +38,19 @@ const Services = () => {
                 <li className="services__modal-service">
                   <i className="uil uil-check-circle services__modal-icon"></i>
                   <p className="services__modal-info">
-                    I develop the user interface.
+                    I develop the frontend.
                   </p>
                 </li>
 
                 <li className="services__modal-service">
                   <i className="uil uil-check-circle services__modal-icon"></i>
-                  <p className="services__modal-info">Web page development.</p>
+                  <p className="services__modal-info">Backend development.</p>
                 </li>
 
                 <li className="services__modal-service">
                   <i className="uil uil-check-circle services__modal-icon"></i>
                   <p className="services__modal-info">
-                    I create ux element interactions.
+                    I create interface that interacts user.
                   </p>
                 </li>
 
@@ -76,7 +76,7 @@ const Services = () => {
           <div>
             <i className="uil uil-arrow services__icon"></i>
             <h3 className="services__title">
-              Ui/Ux <br /> Designer
+              Frontend <br /> Development
             </h3>
           </div>
           <span onClick={() => toggleTab(2)} className="services__button">
@@ -103,7 +103,7 @@ const Services = () => {
 
                 <li className="services__modal-service">
                   <i className="uil uil-check-circle services__modal-icon"></i>
-                  <p className="services__modal-info">Web page development.</p>
+                  <p className="services__modal-info">Frontend development using react js.</p>
                 </li>
 
                 <li className="services__modal-service">
@@ -135,7 +135,7 @@ const Services = () => {
           <div>
             <i className="uil uil-edit services__icon"></i>
             <h3 className="services__title">
-              Visual <br /> Designer
+              Ui/Ux <br /> Designer
             </h3>
           </div>
           <span onClick={() => toggleTab(3)} className="services__button">
