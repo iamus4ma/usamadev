@@ -56,7 +56,7 @@ const Data = () => {
           ></path>
         </svg>
       </h1>
-      <h3 className="home__subtitle">Web Designer</h3>
+      <h3 className="home__subtitle">Web Developer</h3>
       <p className="home__description">
         I'm creative Front-End Developer based in Faisalabad, and I'm very passionate and
         dedicated to my work.
