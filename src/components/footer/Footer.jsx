@@ -63,7 +63,8 @@ const Footer = () => {
         </div>
 
         <span className="footer__copy">
-          &#169; iamus4ma. All rigths reserved
+          Copyright ©2023 All rights reserved | This portfolio is made with
+          &hearts; by iamus4ma
         </span>
       </div>
     </footer>
