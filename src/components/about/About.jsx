@@ -16,9 +16,9 @@ const About = () => {
           <Info />
 
           <p className="about__description">
-            Frontend developer, I create web pages with UI / UX user interface,
-            I have years of experience and many clients are happy with the
-            projects carried out.
+            As a Full Stack Developer, I excel in creating web pages with UI/UX
+            interfaces. With years of experience, I've pleased many clients with
+            projects spanning frontend and backend development.
           </p>
           <a download="" href={CV} className="button button--flex">
             Download CV
