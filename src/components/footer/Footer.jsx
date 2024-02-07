@@ -7,7 +7,6 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer__container container">
         <h1 className="footer__title">iamus4ma</h1>
-
         <ul className="footer__list">
           <li>
             <a href="#about" className="footer__link">
@@ -29,6 +28,20 @@ const Footer = () => {
         </ul>
 
         <div className="footer__social">
+        <a
+            href="https://www.linkedin.com/in/usama-hassan-383b2b227"
+            className="footer__social-link"
+            target="_blank"
+          >
+            <i class="bx bxl-linkedin"></i>
+          </a>
+          <a
+            href="https://github.com/iamus4ma"
+            className="footer__social-link"
+            target="_blank"
+          >
+            <i class="bx bxl-github"></i>
+          </a>
           <a
             href="https://www.facebook.com/usamahassan.0/"
             className="footer__social-link"
@@ -52,18 +65,10 @@ const Footer = () => {
           >
             <i class="bx bxl-twitter"></i>
           </a>
-
-          <a
-            href="https://www.linkedin.com/in/usama-hassan-383b2b227"
-            className="footer__social-link"
-            target="_blank"
-          >
-            <i class="bx bxl-linkedin"></i>
-          </a>
         </div>
 
         <span className="footer__copy">
-          Copyright ©2023 All rights reserved | This portfolio is made with
+          Copyright ©2024 All rights reserved | This portfolio is made with
           &hearts; by iamus4ma
         </span>
       </div>

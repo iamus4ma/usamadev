@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const Backend = () => {
   return (
@@ -12,15 +12,6 @@ const Backend = () => {
 
             <div>
               <h3 className="skills__name">PHP</h3>
-              <span className="skills__level">Intermediate</span>
-            </div>
-          </div>
-
-          <div className="skills__data">
-            <i class="bx bx-badge-check"></i>
-
-            <div>
-              <h3 className="skills__name">Node Js</h3>
               <span className="skills__level">Basic</span>
             </div>
           </div>
@@ -29,8 +20,17 @@ const Backend = () => {
             <i class="bx bx-badge-check"></i>
 
             <div>
-              <h3 className="skills__name">Python</h3>
+              <h3 className="skills__name">Node Js</h3>
               <span className="skills__level">Intermediate</span>
+            </div>
+          </div>
+
+          <div className="skills__data">
+            <i class="bx bx-badge-check"></i>
+
+            <div>
+              <h3 className="skills__name">Python</h3>
+              <span className="skills__level">Basic</span>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@ const Backend = () => {
 
             <div>
               <h3 className="skills__name">MySQL</h3>
-              <span className="skills__level">Intermediate</span>
+              <span className="skills__level">Basic</span>
             </div>
           </div>
 
@@ -50,7 +50,7 @@ const Backend = () => {
 
             <div>
               <h3 className="skills__name">MongoDB</h3>
-              <span className="skills__level">Basic</span>
+              <span className="skills__level">Intermediate</span>
             </div>
           </div>
 
@@ -58,16 +58,14 @@ const Backend = () => {
             <i class="bx bx-badge-check"></i>
 
             <div>
-              <h3 className="skills__name">C#</h3>
-              <span className="skills__level">Basic</span>
+              <h3 className="skills__name">Express js</h3>
+              <span className="skills__level">Intermediate</span>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Backend
+export default Backend;
