@@ -1,6 +1,6 @@
 .scrollup {
     position: fixed;
-    right: 2.5rem;
+    right: 2.2rem;
     bottom: -20%;
     background-color: var(--title-color);
     opacity: 0.8;
@@ -8,6 +8,7 @@
     border-radius: 0.4rem;
     z-index: var(--z-tooltip);
     transition: .4s;
+    margin-bottom: 3rem;
 }
 
 .scrollup__icon {
