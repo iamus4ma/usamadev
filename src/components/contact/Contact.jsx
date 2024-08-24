@@ -1,6 +1,7 @@
-import "./Contact.css";
 import React, { useRef } from "react";
-import emailjs from "@emailjs/browser";
+import emailjs from "emailjs-com";
+import "./Contact.css";
+
 const Contact = () => {
   const form = useRef();
 
@@ -9,12 +10,22 @@ const Contact = () => {
 
     emailjs
       .sendForm(
-        "service_y9idwku",
-        "template_bofr464",
+        "service_y9idwku", // Your EmailJS service ID
+        "template_bofr464", // Your EmailJS template ID
         form.current,
-        "xEZPMuIcTDiXiEnqX"
+        "xEZPMuIcTDiXiEnqX" // Your EmailJS user ID
       )
-     e.target.reset()
+      .then(
+        (result) => {
+          console.log("Success:", result.text);
+          alert("Message sent successfully!");
+          e.target.reset(); // Reset the form after successful submission
+        },
+        (error) => {
+          console.log("Error:", error.text);
+          alert("Failed to send message. Please try again.");
+        }
+      );
   };
 
   return (
@@ -28,13 +39,12 @@ const Contact = () => {
           <div className="contact__info">
             <div className="contact__card">
               <i className="bx bx-mail-send contact__card-icon"></i>
-
               <h3 className="contact__card-title">Email</h3>
               <span className="contact__card-data">usama.0.vip@gmail.com</span>
-
               <a
-                href="mailto: usama.0.vip@gmail.com"
+                href="mailto:usama.0.vip@gmail.com"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="contact__button"
               >
                 Write me
@@ -44,13 +54,12 @@ const Contact = () => {
 
             <div className="contact__card">
               <i className="bx bxl-whatsapp contact__card-icon"></i>
-
               <h3 className="contact__card-title">Whatsapp</h3>
               <span className="contact__card-data">+923414958199</span>
-
               <a
                 href="https://wa.me/qr/NCCCX6ENP665A1"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="contact__button"
               >
                 Write me
@@ -60,13 +69,12 @@ const Contact = () => {
 
             <div className="contact__card">
               <i className="bx bxl-messenger contact__card-icon"></i>
-
               <h3 className="contact__card-title">Messenger</h3>
               <span className="contact__card-data">usamahassan.0</span>
-
               <a
                 href="https://www.facebook.com/usamahassan.0/"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="contact__button"
               >
                 Write me
@@ -78,7 +86,6 @@ const Contact = () => {
 
         <div className="contact__content">
           <h3 className="contact__title">Write me your project</h3>
-
           <form ref={form} onSubmit={sendEmail} className="contact__form">
             <div className="contact__form-div">
               <label className="contact__form-tag">Name</label>
@@ -87,6 +94,7 @@ const Contact = () => {
                 name="name"
                 className="contact__form-input"
                 placeholder="Insert your name"
+                required
               />
             </div>
             <div className="contact__form-div">
@@ -96,6 +104,7 @@ const Contact = () => {
                 name="email"
                 className="contact__form-input"
                 placeholder="Insert your email"
+                required
               />
             </div>
             <div className="contact__form-div contact__form-area">
@@ -106,13 +115,13 @@ const Contact = () => {
                 rows="10"
                 className="contact__form-input"
                 placeholder="Write about your project"
+                required
               ></textarea>
             </div>
-
             <button className="button button--flex">
               Send Message
               <svg
-                class="button__icon"
+                className="button__icon"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
