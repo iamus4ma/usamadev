@@ -50,6 +50,30 @@
   --z-modal: 1000;
 }
 
+[data-theme="dark"] {
+  /* Dark theme variables */
+  --hue: 200;
+  --sat: 15%;
+  --title-color: hsl(var(--hue), var(--sat), 85%);
+  --text-color: hsl(var(--hue), var(--sat), 75%);
+  --body-color: hsl(var(--hue), var(--sat), 10%);
+  --container-color: hsl(var(--hue), var(--sat), 20%);
+}
+body {
+  background-color: var(--body-color);
+  color: var(--text-color);
+}
+
+.button {
+  background-color: var(--title-color);
+    color: var(--container-color);
+}
+
+.button:hover {
+  background-color: var(--text-color);
+}
+
+
 /* Responsive typography */
 @media screen and (max-width: 992px) {
   :root {
