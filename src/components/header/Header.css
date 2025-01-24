@@ -52,9 +52,19 @@
     display: none;
 }
 
-.active-link,
+
 .nav__link:hover {
-    color: var(--title-color-dark);
+    color: var(--text-color);
+}
+
+/* Light Theme - Default Styles */
+.active-link {
+    color: var(--text-color);
+}
+
+/* Dark Theme - Scoped to [data-theme="dark"] */
+[data-theme="dark"] .active-link {
+    color: var(--container-color);
 }
 
 .scroll-header {
