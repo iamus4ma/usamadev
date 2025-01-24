@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css";
-import SunIcon from "../../assets/sun.svg"; 
-import MoonIcon from "../../assets/moon.svg"; 
 
 const Header = () => {
   /*=============== Change Background Header ===============*/
@@ -85,11 +83,7 @@ const Header = () => {
             </li>
             {/* Theme Toggle Button */}
             <button onClick={toggleTheme} className="theme-toggle-btn">
-              <img
-                src={theme === "light" ?  MoonIcon : SunIcon }
-                alt={theme === "light" ?  "Moon Icon" : "Sun Icon"}
-                className="theme-icon"
-              />
+              {theme === "light" ? "Dark" : "Light"}
             </button>
           </ul>
           <i
