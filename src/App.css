@@ -59,6 +59,7 @@
   --body-color: hsl(var(--hue), var(--sat), 10%);
   --container-color: hsl(var(--hue), var(--sat), 20%);
 }
+
 body {
   background-color: var(--body-color);
   color: var(--text-color);
@@ -66,7 +67,7 @@ body {
 
 .button {
   background-color: var(--title-color);
-    color: var(--container-color);
+  color: var(--container-color);
 }
 
 .button:hover {
@@ -104,11 +105,13 @@ input,
 textarea {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
   background-color: var(--body-color);
   color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1,
@@ -116,20 +119,24 @@ h2,
 h3 {
   color: var(--title-color);
   font-weight: var(--font-semi-bold);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ul {
   list-style: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
   text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
   cursor: pointer;
   border: none;
   outline: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 img {
@@ -140,22 +147,26 @@ img {
 /*=============== REUSABLE CSS CLASSES ===============*/
 .section {
   padding: 6rem 0 2rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .section__title {
   font-size: var(--h1-font-size);
   color: var(--title-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .section__subtitle {
   display: block;
   font-size: var(--small-font-size);
   margin-bottom: 4rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .section__title,
 .section__subtitle {
   text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /*=============== LAYOUT ===============*/
@@ -163,11 +174,13 @@ img {
   max-width: 968px;
   margin-left: auto;
   margin-right: auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .grid {
   display: grid;
   gap: 1.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /*=============== BUTTONS ===============*/
@@ -178,6 +191,7 @@ img {
   padding: 1.25rem 2rem;
   border-radius: 1rem;
   font-weight: var(--font-medium);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .button:hover {
@@ -186,6 +200,7 @@ img {
 
 .button__icon {
   margin-left: var(--mb-0-5);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .button--flex {
@@ -226,8 +241,7 @@ img {
   }
 }
 
-@media screen and (max-width: 576px) {
-}
+@media screen and (max-width: 576px) {}
 
 /* For small devices */
 @media screen and (max-width: 350px) {
