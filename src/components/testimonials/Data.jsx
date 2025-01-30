@@ -1,29 +1,27 @@
+import Image from "../../assets/testimonial.png";
 import Image1 from "../../assets/testimonial1.png";
-import Image2 from "../../assets/testimonial2.png";
-import Image3 from "../../assets/testimonial3.png";
- 
+import Image3 from "../../assets/testimonial4.png";
 
 export const Data = [
   {
     id: 1,
     image: Image1,
-    title: "Jhon Doe",
+    title: "Mark Rogers",
     description:
-      "A really good job, all aspects of the project were followed step by step and with good results.",
+      "Usama was a pleasure to work with. He understood our requirements perfectly and delivered a website that exceeded our expectations. His skills in both frontend backend dev are top-notch.",
   },
   {
     id: 2,
-    image: Image2,
-    title: "Harry Clinton",
+    image: Image,
+    title: "Dr John Dohsas",
     description:
-      "A really good job, all aspects of the project were followed step by step and with good results.",
+      "The project was completed on time and exceeded my expectations. The communication was excellent throughout the entire process. Will definitely work with them again.",
   },
   {
     id: 3,
     image: Image3,
-    title: "Sara Cill",
+    title: "Emily Johnson",
     description:
-      "A really good job, all aspects of the project were followed step by step and with good results.",
+      "Working with Usama was a fantastic experience. He transformed our outdated website into a modern, user-friendly platform. Highly recommend him for any web dev projects.",
   },
 ];
-
