@@ -3,7 +3,7 @@ import "./Qualification.css";
 import React, { useState } from "react";
 
 const Qualification = () => {
-  const [toggleState, setToggleState] = useState(1);
+  const [toggleState, setToggleState] = useState(2);
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -122,65 +122,66 @@ const Qualification = () => {
             </div> */}
           </div>
 
-          <div className={
+          <div
+            className={
               toggleState === 2
                 ? "qualification__content qualification__content-active"
                 : "qualification__content"
-            }>
-            <div className="qualification__data">
-              <div>
-                <h3 className="qualification__title">React Developer</h3>
-                <span className="qualification__subtitle">
-                  SimplexMed
-                </span>
-                <div className="qualification__calender">
-                  <i className="uil uil-calendar-alt"></i>
-                  2023 - Present
-                </div>
-              </div>
+            }
+          >
+        {/* Frontend Developer */}
+  <div className="qualification__data">
+    <div></div>
+    <div>
+      <span className="qualification__rounder"></span>
+      <span className="qualification__line"></span>
+    </div>
+    <div>
+      <h3 className="qualification__title">Frontend Developer</h3>
+      <span className="qualification__subtitle">
+        ProSoftware Technologies
+      </span>
+      <div className="qualification__calender">
+        <i className="uil uil-calendar-alt"></i>
+        2024 - present
+      </div>
+    </div>
+  </div>
 
-              <div>
-                <span className="qualification__rounder"></span>
-                <span className="qualification__line"></span>
-              </div>
-            </div>
+  {/* React Developer */}
+  <div className="qualification__data">
+    <div>
+      <h3 className="qualification__title">React Developer</h3>
+      <span className="qualification__subtitle">SimplexMed</span>
+      <div className="qualification__calender">
+        <i className="uil uil-calendar-alt"></i>
+        2023 - 2024
+      </div>
+    </div>
+    <div>
+      <span className="qualification__rounder"></span>
+      <span className="qualification__line"></span>
+    </div>
+  </div>
 
-            <div className="qualification__data">
-              <div></div>
-
-              <div>
-                <span className="qualification__rounder"></span>
-                <span className="qualification__line"></span>
-              </div>
-              <div>
-                <h3 className="qualification__title">Ui/Ux Designer</h3>
-                <span className="qualification__subtitle">
-                Freelancing - Online
-                </span>
-                <div className="qualification__calender">
-                  <i className="uil uil-calendar-alt"></i>
-                  2020 - present
-                </div>
-              </div>
-            </div>
-
-            <div className="qualification__data">
-              <div>
-                <h3 className="qualification__title">Web Development</h3>
-                <span className="qualification__subtitle">
-                  CUI Sahiwal - Software-House
-                </span>
-                <div className="qualification__calender">
-                  <i className="uil uil-calendar-alt"></i>
-                  2022 - 2023
-                </div>
-              </div>
-
-              <div>
-                <span className="qualification__rounder"></span>
-                <span className="qualification__line"></span>
-              </div>
-            </div>
+  {/* Web Development - CUI Sahiwal */}
+  <div className="qualification__data">
+    <div></div>
+    <div>
+      <span className="qualification__rounder"></span>
+      <span className="qualification__line"></span>
+    </div>
+    <div>
+      <h3 className="qualification__title">Web Development</h3>
+      <span className="qualification__subtitle">
+        CUI Sahiwal - Software-House
+      </span>
+      <div className="qualification__calender">
+        <i className="uil uil-calendar-alt"></i>
+        2022 - 2023
+      </div>
+    </div>
+  </div>
           </div>
         </div>
       </div>
