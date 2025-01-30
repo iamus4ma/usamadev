@@ -1,26 +1,56 @@
+import { Suspense, useState } from "react";
 import "./About.css";
-
-import React from "react";
-import AboutImg from "../../assets/about1.jpg";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+// import AboutImg from "../../assets/about1.jpg";
 import CV from "../../assets/Usama-Cv.pdf";
 import Info from "./Info";
+import Developer from "./Developer";
+import CanvasLoader from "../Loading";
 const About = () => {
+  const [animationName, setAnimationName] = useState("idle");
+
   return (
     <section className="about section" id="about">
       <h2 className="section__title">About Me</h2>
       <span className="section__subtitle">My introduction</span>
       <div className="about__container container grid">
-        <img src={AboutImg} alt="Usama Hassan Front-End Developer Portfolio" className="about__img" />
+        {/* <img src={AboutImg} alt="Usama Hassan Front-End Developer Portfolio" className="about__img" /> */}
+        <Canvas
+          style={{ height: "60vh", width: "100%" }}
+          camera={{ position: [0, 3, 10], fov: 40 }}
+        >
+          <ambientLight intensity={7} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+          <directionalLight position={[10, 10, 10]} intensity={1} />
+          <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2} />
 
+          <Suspense fallback={<CanvasLoader />}>
+            <Developer
+              position-y={-3}
+              scale={3}
+              animationName={animationName}
+            />
+          </Suspense>
+        </Canvas>
         <div className="about__data">
-          <Info />
+          <Info setAnimationName={setAnimationName} />
 
           <p className="about__description">
             As a Full Stack Developer, I excel in creating web pages with UI/UX
             interfaces. With years of experience, I've pleased many clients with
             projects spanning frontend and backend development.
           </p>
-          <a download="" href={CV} className="button button--flex">
+          <a
+            download=""
+            href={CV}
+            className="button button--flex"
+            onClick={() => {
+              setAnimationName("salute");
+            }}
+            onPointerOver={() => setAnimationName("salute")}
+            onPointerOut={() => setAnimationName("idle")}
+          >
             Download CV
             <svg
               class="button__icon"

@@ -14,7 +14,11 @@
     "react-helmet": "^6.1.0",
     "react-scripts": "5.0.1",
     "swiper": "^9.3.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@gsap/react": "^2.1.1",
+    "@react-three/drei": "^9.111.3",
+    "@react-three/fiber": "^8.17.6",
+    "@types/three": "^0.168.0"
   },
   "scripts": {
     "start": "react-scripts start",
