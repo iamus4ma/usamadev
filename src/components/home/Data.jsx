@@ -58,7 +58,7 @@ const Data = () => {
           ></path>
         </svg>
       </h1>
-      <h3 className="home__subtitle">Web Developer</h3>
+      <h3 className="home__subtitle">Software Engineer</h3>
       <p className="home__description">
       I'm a passionate Full Stack Developer based in Faisalabad, known for my creativity and dedication. With expertise in both frontend and backend development, I thrive on pushing technological boundaries to deliver exceptional results.
       </p>
