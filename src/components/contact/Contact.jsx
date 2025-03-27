@@ -10,10 +10,10 @@ const Contact = () => {
 
     emailjs
       .sendForm(
-        "service_y9idwku", // Your EmailJS service ID
-        "template_bofr464", // Your EmailJS template ID
+        `${process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID}`,  // Your EmailJS service ID
+        `${process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID}`, // Your EmailJS template ID
         form.current,
-        "xEZPMuIcTDiXiEnqX" // Your EmailJS user ID
+        `${process.env.NEXT_PUBLIC_EMAILJS_USER_ID}`  // Your EmailJS user ID
       )
       .then(
         (result) => {
