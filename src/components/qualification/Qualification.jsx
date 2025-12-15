@@ -139,7 +139,7 @@ const Qualification = () => {
     <div>
       <h3 className="qualification__title">Frontend Developer</h3>
       <span className="qualification__subtitle">
-        ProSoftware Technologies
+        Bellmedex
       </span>
       <div className="qualification__calender">
         <i className="uil uil-calendar-alt"></i>
