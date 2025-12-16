@@ -3,7 +3,7 @@ import "./About.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 // import AboutImg from "../../assets/about1.jpg";
-import CV from "../../assets/Usama-Cv.pdf";
+import CV from "../../assets/usamaDev.pdf";
 import Info from "./Info";
 import Developer from "./Developer";
 import CanvasLoader from "../Loading";

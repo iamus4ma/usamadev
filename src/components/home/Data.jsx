@@ -60,7 +60,7 @@ const Data = () => {
       </h1>
       <h3 className="home__subtitle">Software Engineer</h3>
       <p className="home__description">
-      I'm a passionate Full Stack Developer based in Faisalabad, known for my creativity and dedication. With expertise in both frontend and backend development, I thrive on pushing technological boundaries to deliver exceptional results.
+      I'm a passionate Full Stack Developer based in Pakistan, known for my creativity and dedication. With expertise in both frontend and backend development, I thrive on pushing technological boundaries to deliver exceptional results.
       </p>
       <a href="#contact" className="button button--flex">
         Say Hello
