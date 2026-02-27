@@ -7,6 +7,7 @@ const Social = () => {
         href="https://www.linkedin.com/in/usama-hassan-383b2b227"
         className="home__social-icon"
         target="_blank"
+        rel="noreferrer"
       >
         <i class="uil uil-linkedin-alt"></i>
       </a>
@@ -14,6 +15,7 @@ const Social = () => {
         href="https://github.com/iamus4ma"
         className="home__social-icon"
         target="_blank"
+        rel="noreferrer"
       >
         <i class="uil uil-github-alt"></i>
       </a>
@@ -21,6 +23,7 @@ const Social = () => {
         href="https://www.instagram.com/iamus4ma/"
         className="home__social-icon"
         target="_blank"
+        rel="noreferrer"
       >
         <i class="uil uil-instagram"></i>
       </a>
@@ -29,6 +32,7 @@ const Social = () => {
         href="https://www.facebook.com/usamahassan.0/"
         className="home__social-icon"
         target="_blank"
+        rel="noreferrer"
       >
         <i class="uil uil-facebook-f"></i>
       </a>
@@ -37,6 +41,7 @@ const Social = () => {
         href="https://twitter.com/iamus4ma"
         className="home__social-icon"
         target="_blank"
+        rel="noreferrer"
       >
         <i class="uil uil-twitter-alt"></i>
       </a>
