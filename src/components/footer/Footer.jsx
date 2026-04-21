@@ -46,14 +46,14 @@ const Footer = () => {
           >
             <i className="bx bxl-github"></i>
           </a>
-          <a
+          {/* <a
             href="https://www.facebook.com/usamahassan.0/"
             className="footer__social-link"
             target="_blank"
             rel="noopener noreferrer"
           >
             <i className="bx bxl-facebook"></i>
-          </a>
+          </a> */}
           <a
             href="https://www.instagram.com/iamus4ma/"
             className="footer__social-link"

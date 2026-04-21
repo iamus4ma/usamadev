@@ -28,14 +28,14 @@ const Social = () => {
         <i class="uil uil-instagram"></i>
       </a>
 
-      <a
+      {/* <a
         href="https://www.facebook.com/usamahassan.0/"
         className="home__social-icon"
         target="_blank"
         rel="noreferrer"
       >
         <i class="uil uil-facebook-f"></i>
-      </a>
+      </a> */}
 
       <a
         href="https://twitter.com/iamus4ma"
