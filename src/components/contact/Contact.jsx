@@ -1,12 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import emailjs from "emailjs-com";
 import "./Contact.css";
 
 const Contact = () => {
   const form = useRef();
+  const [formMessage, setFormMessage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setFormMessage(null);
 
     emailjs
       .sendForm(
@@ -18,12 +22,14 @@ const Contact = () => {
       .then(
         (result) => {
           console.log("Success:", result.text);
-          alert("Message sent successfully!");
-          e.target.reset(); // Reset the form after successful submission
+          setFormMessage({ type: "success", text: "Message sent successfully!" });
+          e.target.reset();
+          setIsSubmitting(false);
         },
         (error) => {
           console.log("Error:", error.text);
-          alert("Failed to send message. Please try again.");
+          setFormMessage({ type: "error", text: "Failed to send message. Please try again." });
+          setIsSubmitting(false);
         }
       );
   };
@@ -35,7 +41,7 @@ const Contact = () => {
 
       <div className="contact__container container grid">
         <div className="contact__content">
-          <h3 className="contact__title">Talk to me</h3>
+          <h3 className="contact__title">Contact Information</h3>
           <div className="contact__info">
             <div className="contact__card">
               <i className="bx bx-mail-send contact__card-icon"></i>
@@ -47,7 +53,7 @@ const Contact = () => {
                 rel="noopener noreferrer"
                 className="contact__button"
               >
-                Write me
+                Email Me
                 <i className="bx bx-right-arrow-alt contact__button-icon"></i>
               </a>
             </div>
@@ -68,16 +74,16 @@ const Contact = () => {
             </div> */}
 
             <div className="contact__card">
-              <i className="bx bxl-messenger contact__card-icon"></i>
-              <h3 className="contact__card-title">Messenger</h3>
-              <span className="contact__card-data">usamahassan.0</span>
+              <i className="bx bxl-linkedin contact__card-icon"></i>
+              <h3 className="contact__card-title">LinkedIn</h3>
+              <span className="contact__card-data">iamus4ma</span>
               <a
-                href="https://www.facebook.com/usamahassan.0/"
+                href="https://pk.linkedin.com/in/iamus4ma"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact__button"
               >
-                Write me
+                Connect
                 <i className="bx bx-right-arrow-alt contact__button-icon"></i>
               </a>
             </div>
@@ -85,7 +91,7 @@ const Contact = () => {
         </div>
 
         <div className="contact__content">
-          <h3 className="contact__title">Write me your project</h3>
+          <h3 className="contact__title">Start a Conversation</h3>
           <form ref={form} onSubmit={sendEmail} className="contact__form">
             <div className="contact__form-div">
               <label className="contact__form-tag">Name</label>
@@ -114,12 +120,12 @@ const Contact = () => {
                 cols="30"
                 rows="10"
                 className="contact__form-input"
-                placeholder="Write about your project"
+                placeholder="Tell me about your project"
                 required
               ></textarea>
             </div>
-            <button className="button button--flex">
-              Send Message
+            <button className="button button--flex" disabled={isSubmitting}>
+              {isSubmitting ? "Sending..." : "Send Message"}
               <svg
                 className="button__icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -138,6 +144,13 @@ const Contact = () => {
                 ></path>
               </svg>
             </button>
+            {formMessage && (
+              <span
+                className={`contact__form-message contact__form-message--${formMessage.type}`}
+              >
+                {formMessage.text}
+              </span>
+            )}
           </form>
         </div>
       </div>

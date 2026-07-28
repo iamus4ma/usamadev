@@ -106,6 +106,20 @@
 
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .home__img {
+        animation: none;
+    }
+
+    .wheel {
+        animation: none;
+    }
+
+    .waving-hand {
+        animation: none;
+    }
+}
+
 .home__scroll-name {
     color: var(--title-color);
     font-weight: var(--font-medium);

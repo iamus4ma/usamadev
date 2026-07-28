@@ -60,12 +60,15 @@ const Data = () => {
       </h1>
       <h3 className="home__subtitle">Software Engineer</h3>
       <p className="home__description">
-      I'm a passionate Full Stack Developer based in Pakistan, known for my creativity and dedication. With expertise in both frontend and backend development, I thrive on pushing technological boundaries to deliver exceptional results.
+      Full Stack Developer based in Pakistan, passionate about crafting
+      scalable web solutions. I bridge the gap between frontend aesthetics and
+      backend logic, turning complex requirements into clean, maintainable
+      code.
       </p>
       <a href="#contact" className="button button--flex">
         Say Hello
         <svg
-                  class="button__icon"
+                  className="button__icon"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"

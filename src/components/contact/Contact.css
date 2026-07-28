@@ -104,6 +104,34 @@
     resize: none;
 }
 
+.contact__form-input:focus {
+    border-color: var(--title-color);
+}
+
+.contact__form-message {
+    display: block;
+    text-align: center;
+    font-size: var(--small-font-size);
+    margin-top: var(--mb-1);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.contact__form-message--success {
+    color: var(--container-color);
+    background-color: var(--title-color);
+}
+
+.contact__form-message--error {
+    color: var(--container-color);
+    background-color: #c0392b;
+}
+
+.contact__button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 /*=============== BREAKPOINTS ===============*/
 /* For large devices */
 @media screen and (max-width: 992px) {

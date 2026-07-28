@@ -6,6 +6,7 @@ import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import Qualification from './components/qualification/Qualification';
+import Projects from './components/projects/Projects';
 import Scrollup from './components/scrollup/Scrollup';
 import Services from './components/services/Services';
 import Skills from './components/skills/Skills';
@@ -52,22 +53,22 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>Usama Hassan | Full Stack Developer Portfolio</title>
-        <meta name="description" content="Usama Hassan's portfolio showcasing front-end development skills in React JS, JavaScript, and more. Explore my projects, skills, and qualifications." />
-        <meta name="keywords" content="Usama Hassan, Usama Hassan portfolio, iamus4ma, Front-end Developer, Full Stack Developer, MERN Stack Developer, Software Engineer, React JS, Portfolio" />
+        <title>Usama Hassan | Full Stack Developer</title>
+        <meta name="description" content="Full Stack Developer specializing in React, Node.js, and modern web technologies. Explore my portfolio of projects, technical skills, and professional experience." />
+        <meta name="keywords" content="Usama Hassan, iamus4ma, Full Stack Developer, MERN Stack Developer, Software Engineer, React Developer, Node.js, Portfolio, Web Developer Pakistan" />
         <meta name="author" content="Usama Hassan" />
         
         {/* Open Graph Meta Tags */}
-        <meta property="og:title" content="Usama Hassan | Full Stack Developer Portfolio" />
-        <meta property="og:description" content="Usama Hassan's portfolio showcasing front-end development skills in React JS, JavaScript, and more. Explore my projects, skills, and qualifications." />
+        <meta property="og:title" content="Usama Hassan | Full Stack Developer" />
+        <meta property="og:description" content="Full Stack Developer specializing in React, Node.js, and modern web technologies. Explore my portfolio of projects, technical skills, and professional experience." />
         <meta property="og:image" content="https://www.iamus4ma.com/images/portfolio-thumbnail.jpg" />
         <meta property="og:url" content="https://www.iamus4ma.com" />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Usama Hassan Portfolio" />
+        <meta property="og:site_name" content="Usama Hassan | Full Stack Developer" />
 
         {/* Twitter Card Meta Tags */}
-        <meta name="twitter:title" content="Usama Hassan | Full Stack Developer Portfolio" />
-        <meta name="twitter:description" content="Usama Hassan's portfolio showcasing front-end development skills in React JS, JavaScript, and more." />
+        <meta name="twitter:title" content="Usama Hassan | Full Stack Developer" />
+        <meta name="twitter:description" content="Full Stack Developer specializing in React, Node.js, and modern web technologies." />
         <meta name="twitter:image" content="https://www.iamus4ma.com/images/portfolio-thumbnail.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
 
@@ -101,6 +102,7 @@ function App() {
         <Skills />
         <Services />
         <Qualification />
+        <Projects />
         <Testimonial />
         <Contact />
       </main>

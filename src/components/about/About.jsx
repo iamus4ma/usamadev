@@ -13,7 +13,7 @@ const About = () => {
   return (
     <section className="about section" id="about">
       <h2 className="section__title">About Me</h2>
-      <span className="section__subtitle">My introduction</span>
+      <span className="section__subtitle">Get to know me</span>
       <div className="about__container container grid">
         {/* <img src={AboutImg} alt="Usama Hassan Front-End Developer Portfolio" className="about__img" /> */}
         <Canvas
@@ -37,9 +37,10 @@ const About = () => {
           <Info setAnimationName={setAnimationName} />
 
           <p className="about__description">
-            As a Full Stack Developer, I excel in creating web pages with UI/UX
-            interfaces. With years of experience, I've pleased many clients with
-            projects spanning frontend and backend development.
+            Full Stack Developer with expertise in building responsive web
+            applications and intuitive UI/UX interfaces. I deliver end-to-end
+            solutions that marry clean frontend design with robust backend
+            architecture, serving clients across diverse industries.
           </p>
           <a
             download=""
@@ -53,7 +54,7 @@ const About = () => {
           >
             Download CV
             <svg
-              class="button__icon"
+              className="button__icon"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"

@@ -71,25 +71,60 @@
     box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* Theme toggle button styles */
-.theme-toggle-btn {
-    background-color: var(--title-color);
-    color: var(--container-color);
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: var(--font-medium);
-    cursor: pointer;
-    border: none;
-    outline: none;
-    transition: background-color 0.3s ease;
-    margin-left: auto;
-    /* Ensures the button stays at the end of the row */
-    align-self: center;
-    /* Vertically centers the button */
+/* Theme toggle switch */
+.nav__theme-item {
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
 }
 
-.theme-toggle-btn:hover {
+.theme-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle__track {
+    position: relative;
+    width: 52px;
+    height: 26px;
+    border-radius: 13px;
     background-color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle__sun,
+.theme-toggle__moon {
+    font-size: 0.75rem;
+    color: var(--container-color);
+    z-index: 1;
+    line-height: 1;
+    position: relative;
+    top: 0;
+}
+
+.theme-toggle__thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--container-color);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 2;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle__thumb--dark {
+    transform: translateX(26px);
 }
 
 /* Media Queries */
@@ -156,6 +191,11 @@
     .nav__close,
     .nav__toggle {
         display: block;
+    }
+
+    .nav__theme-item {
+        margin-left: 0;
+        justify-content: center;
     }
 }
 

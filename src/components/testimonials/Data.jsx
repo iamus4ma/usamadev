@@ -8,20 +8,20 @@ export const Data = [
     image: Image1,
     title: "Mark Rogers",
     description:
-      "Usama was a pleasure to work with. He understood our requirements perfectly and delivered a website that exceeded our expectations. His skills in both frontend backend dev are top-notch.",
+      "Usama was a pleasure to work with. He understood our requirements perfectly and delivered a website that exceeded our expectations. His skills in both frontend and backend development are top-notch.",
   },
   {
     id: 2,
     image: Image,
     title: "Dr John Dohsas",
     description:
-      "The project was completed on time and exceeded my expectations. The communication was excellent throughout the entire process. Will definitely work with them again.",
+      "The project was completed on time and exceeded my expectations. The communication was excellent throughout the entire process. I will definitely work with him again.",
   },
   {
     id: 3,
     image: Image3,
     title: "Emily Johnson",
     description:
-      "Working with Usama was a fantastic experience. He transformed our outdated website into a modern, user-friendly platform. Highly recommend him for any web dev projects.",
+      "Working with Usama was a fantastic experience. He transformed our outdated website into a modern, user-friendly platform. I highly recommend him for any web development projects.",
   },
 ];

@@ -23,6 +23,12 @@ const Footer = () => {
           </li>
 
           <li>
+            <a href="#projects" className="footer__link">
+              Projects
+            </a>
+          </li>
+
+          <li>
             <a href="#testimonials" className="footer__link">
               Testimonials
             </a>
@@ -73,8 +79,7 @@ const Footer = () => {
         </div>
 
         <span className="footer__copy">
-          Copyright ©{currentYear} All rights reserved | This portfolio is made with
-          &hearts; by iamus4ma
+          &copy; {currentYear} Usama Hassan. All rights reserved.
         </span>
       </div>
     </footer>

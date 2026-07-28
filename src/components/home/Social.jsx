@@ -9,7 +9,7 @@ const Social = () => {
         target="_blank"
         rel="noreferrer"
       >
-        <i class="uil uil-linkedin-alt"></i>
+        <i className="uil uil-linkedin-alt"></i>
       </a>
       <a
         href="https://github.com/iamus4ma"
@@ -17,7 +17,7 @@ const Social = () => {
         target="_blank"
         rel="noreferrer"
       >
-        <i class="uil uil-github-alt"></i>
+        <i className="uil uil-github-alt"></i>
       </a>
       <a
         href="https://www.instagram.com/iamus4ma/"
@@ -25,7 +25,7 @@ const Social = () => {
         target="_blank"
         rel="noreferrer"
       >
-        <i class="uil uil-instagram"></i>
+        <i className="uil uil-instagram"></i>
       </a>
 
       {/* <a
@@ -43,7 +43,7 @@ const Social = () => {
         target="_blank"
         rel="noreferrer"
       >
-        <i class="uil uil-twitter-alt"></i>
+        <i className="uil uil-twitter-alt"></i>
       </a>
     </div>
   );
