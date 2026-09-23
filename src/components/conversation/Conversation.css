@@ -128,6 +128,22 @@ body { margin: 0; }
 .reply-content h2 { font-family: var(--chat-display); font-weight: 400; font-size: 29px; letter-spacing: -.7px; line-height: 1.25; margin-bottom: 16px; }
 .reply-content > p { margin-bottom: 16px; font-size: 13px; line-height: 1.95; }
 .reply-note { display: flex; align-items: center; gap: 10px; color: var(--chat-accent); margin-top: 24px; font-size: 12px; }
+.about-profile { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); align-items: start; gap: 28px; margin-top: 24px; }
+.about-photo { min-width: 0; margin: 0; }
+.about-photo > a { display: block; position: relative; border-radius: 12px; overflow: clip; background: var(--chat-sidebar); }
+.about-photo img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.about-photo-expand { position: absolute; right: 10px; bottom: 10px; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--chat-rule); border-radius: 7px; background: var(--chat-surface); color: var(--chat-ink); }
+.about-photo-expand svg { width: 16px; height: 16px; }
+.about-photo figcaption { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
+.about-photo figcaption strong { font-size: 12px; font-weight: 500; }
+.about-photo figcaption > span { color: var(--chat-muted); font-size: 10px; }
+.about-profile-info { min-width: 0; }
+.about-profile-info > p { font-size: 13px; line-height: 1.95; margin-bottom: 16px; }
+.about-profile-info .reply-note { align-items: flex-start; font-size: 11px; }
+@media (max-width: 600px) {
+  .about-profile { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .about-photo { width: min(100%, 280px); }
+}
 .conversation-project { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 12px; padding: 25px 0; border-bottom: 1px solid var(--chat-rule); }
 .project-number { color: var(--chat-muted); font-size: 10px; padding-top: 3px; }
 .project-heading h3 { font-size: 15px; font-weight: 500; margin-bottom: 3px; }
@@ -144,10 +160,19 @@ body { margin: 0; }
 .skill-groups h3, .reply-subheading { font-size: 13px; font-weight: 500; margin-bottom: 14px; }
 .skill-groups .tech-tags li { font-size: 12px; padding: 6px 12px; }
 .conversation-timeline { list-style: none; margin: 24px 0 32px; }
-.conversation-timeline li { display: flex; justify-content: space-between; gap: 18px; padding: 17px 0; border-bottom: 1px solid var(--chat-rule); }
+.conversation-timeline > li { display: flex; justify-content: space-between; gap: 18px; padding: 17px 0; border-bottom: 1px solid var(--chat-rule); }
 .conversation-timeline h4 { font-size: 13px; font-weight: 500; }
 .conversation-timeline p, .conversation-timeline li > span { font-size: 11px; color: var(--chat-muted); }
 .conversation-timeline li > span { flex-shrink: 0; padding-top: 3px; }
+.conversation-timeline .timeline-location { font-size: 10px; margin-top: 4px; }
+.conversation-timeline .timeline-description { color: var(--chat-ink); font-size: 12px; margin-top: 14px; line-height: 1.8; }
+.timeline-highlights { list-style: disc; padding-left: 16px; margin-top: 10px; }
+.timeline-highlights li { font-size: 11px; color: var(--chat-muted); margin: 8px 0; line-height: 1.8; }
+.certification-list { margin: 24px 0; }
+.certification-list li { display: flex; align-items: flex-start; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--chat-rule); }
+.certification-list svg { color: var(--chat-accent); margin-top: 2px; }
+.certification-list h3 { font-size: 13px; font-weight: 500; line-height: 1.8; }
+.contact-details { display: flex; flex-wrap: wrap; gap: 12px 24px; color: var(--chat-muted); font-size: 12px; margin: 0 0 20px; }
 .conversation-services dt { font-size: 14px; font-weight: 500; margin-top: 22px; }
 .conversation-services dd { font-size: 12px; color: var(--chat-muted); margin: 6px 0 22px; }
 .conversation-quotes figure { padding: 24px 0; border-bottom: 1px solid var(--chat-rule); }
@@ -203,7 +228,7 @@ body { margin: 0; }
   .reply-content, .follow-up-prompts { padding-left: 0; }
   .response-typing { padding-left: 0; }
   .conversation-app .reveal-now { margin-left: 0; }
-  .conversation-timeline li { flex-direction: column; gap: 4px; }
+  .conversation-timeline > li { flex-direction: column; gap: 4px; }
 }
 @media (max-width: 374px) {
   .conversation-main { padding-inline: 18px; }

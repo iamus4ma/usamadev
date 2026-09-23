@@ -34,9 +34,10 @@ export default function AnimatedResponse({ active, children }) {
     const root = rootRef.current;
     const body = root.querySelector('.response-body');
     const typing = root.querySelector('.response-typing');
-    const words = body.querySelectorAll(':scope > .response-text .response-word');
+    const words = body.querySelectorAll(':scope > .response-text .response-word, .about-profile-info > .response-text .response-word');
     const details = [...body.querySelectorAll(':scope > :not(.response-text)')].flatMap(element =>
-      element.matches('.conversation-projects, .conversation-quotes, .conversation-timeline, .skill-groups, .conversation-services')
+      element.matches('.about-profile') ? [...element.querySelectorAll('.about-photo, .reply-note')] :
+      element.matches('.conversation-projects, .conversation-quotes, .conversation-timeline, .skill-groups, .conversation-services, .certification-list')
         ? [...element.children] : [element]
     );
     let pulse;
