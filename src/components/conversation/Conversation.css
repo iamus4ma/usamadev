@@ -118,7 +118,7 @@ body { margin: 0; }
 .send-question:disabled { opacity: .35; cursor: default; }
 .conversation-composer > p { text-align: center; font-size: 9px; color: var(--chat-muted); margin-top: 12px; }
 .conversation-thread { max-width: 720px; margin: 0 auto; }
-.conversation-turn { margin: 12px 0 42px; animation: reply-appear 200ms var(--chat-ease); }
+.conversation-turn { margin: 12px 0 42px; }
 .visitor-message { width: fit-content; max-width: 88%; margin-left: auto; margin-bottom: 28px; background: var(--chat-sidebar); padding: 12px 18px; border-radius: 18px 18px 4px 18px; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 13px; }
 .reply-author { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
 .reply-monogram { font-family: var(--chat-display); border: 1px solid var(--chat-rule); border-radius: 50%; width: 30px; height: 30px; display: grid; place-items: center; font-size: 24px; line-height: 1; }
@@ -165,7 +165,15 @@ body { margin: 0; }
 .conversation-app .follow-up-prompts button { display: flex; align-items: center; gap: 6px; padding: 7px 12px; border: 1px solid var(--chat-rule); border-radius: 20px; font-size: 11px; white-space: nowrap; }
 .follow-up-prompts button:hover { background: var(--chat-soft); }
 .follow-up-prompts svg { width: 14px; height: 14px; }
-@keyframes reply-appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+.animated-response { position: relative; }
+.response-typing { display: flex; align-items: center; gap: 5px; min-height: 42px; padding-left: 40px; color: var(--chat-muted); }
+.typing-dot { display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--chat-accent); }
+.response-typing > span:last-child { margin-left: 8px; font-size: 10px; }
+.conversation-app .reveal-now { display: block; margin: 14px 0 0 40px; padding: 4px 0; color: var(--chat-muted); font-size: 10px; white-space: nowrap; }
+.reveal-now:hover { color: var(--chat-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .conversation-app .suggested-prompts button:hover { transform: translateY(-2px); }
+}
 @media (min-width: 1500px) { .conversation-welcome { margin-top: 10vh; } }
 @media (max-width: 1100px) {
   .conversation-app { grid-template-columns: 224px minmax(0, 1fr); }
@@ -193,6 +201,8 @@ body { margin: 0; }
   .conversation-composer { padding: 8px 20px max(12px, env(safe-area-inset-bottom)); }
   .conversation-composer textarea { font-size: 16px; }
   .reply-content, .follow-up-prompts { padding-left: 0; }
+  .response-typing { padding-left: 0; }
+  .conversation-app .reveal-now { margin-left: 0; }
   .conversation-timeline li { flex-direction: column; gap: 4px; }
 }
 @media (max-width: 374px) {
