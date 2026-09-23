@@ -111,6 +111,19 @@ body { margin: 0; }
 .conversation-composer textarea { display: block; width: 100%; resize: none; border: 0; background: none; line-height: 1.6; font-size: 13px; padding: 0 2px; min-height: 46px; max-height: 100px; }
 .conversation-composer textarea::placeholder { color: var(--chat-muted); opacity: 1; }
 .conversation-composer textarea:focus-visible { outline-offset: 2px; border-radius: 3px; }
+.conversation-composer.composer-aff { animation: composerPulse 2.4s ease-in-out infinite; }
+.conversation-composer.composer-aff .composer-bottom { box-shadow: 0 6px 18px rgba(0,0,0,0.06); border-radius: 12px; }
+
+@keyframes composerPulse {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .conversation-composer.composer-aff { animation: none; }
+  .conversation-composer.composer-aff .composer-bottom { box-shadow: none; }
+}
 .composer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 5px; }
 .composer-bottom > span { color: var(--chat-muted); font-size: 10px; display: flex; align-items: center; gap: 7px; }
 .composer-bottom > span svg { width: 14px; height: 14px; }

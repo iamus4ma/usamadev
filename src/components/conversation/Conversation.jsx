@@ -133,6 +133,20 @@ export default function Conversation() {
   const hasMessages = messages.length > 0;
   const activeTopic = messages[messages.length - 1]?.topic;
 
+  function isTouchDevice() {
+    if (typeof window === 'undefined' || !window.matchMedia) return false;
+    return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  }
+
+  // Composer affordance: show a subtle pulse on touch devices to invite interaction
+  const [showAffordance, setShowAffordance] = useState(false);
+
+  useEffect(() => {
+    if (!isTouchDevice()) return;
+    // Start affordance after a short delay so it doesn't clash with initial page animations
+    const id = setTimeout(() => setShowAffordance(true), 800);
+    return () => clearTimeout(id);
+  }, []);
   useLayoutEffect(() => {
     if (hasMessages || reduced) return;
     const context = gsap.context(() => {
@@ -182,14 +196,14 @@ export default function Conversation() {
     setMessages(previous => [...previous, { prompt: prompt.trim(), topic }]);
     setInput('');
     setMenuOpen(false);
-    inputRef.current?.focus({ preventScroll: true });
+    if (!isTouchDevice()) inputRef.current?.focus({ preventScroll: true });
   }
 
   function reset() {
     setMessages([]);
     setInput('');
     setMenuOpen(false);
-    inputRef.current?.focus({ preventScroll: true });
+    if (!isTouchDevice()) inputRef.current?.focus({ preventScroll: true });
   }
 
   function closeMenu() {
@@ -223,7 +237,7 @@ export default function Conversation() {
       <main ref={mainRef} id="conversation-main" className={`conversation-main ${messages.length ? 'has-messages' : ''}`} tabIndex="-1">
         {!messages.length ? <section className="conversation-welcome"><div className="welcome-avatar"><img src={portrait} alt="" width="64" height="64" /><span><Icon name="code" /></span></div><p className="welcome-intro">A different way to get to know me.</p><h1>Hi, I’m Usama.<br /><span>What would you like to explore?</span></h1><p className="welcome-description">Full stack developer. Thoughtful interfaces.<br className="desktop-break" /> Web and mobile, from interface to API.</p><div className="suggested-prompts">{['projects', 'skills', 'about', 'contact'].map(id => { const topic = topics.find(item => item.id === id); return <button key={id} onClick={() => ask(topic.prompt, id)}><Icon name={topic.icon} /><strong>{topic.prompt}</strong><span>{topic.hint}</span><Icon name="external" className="prompt-arrow" /></button>; })}</div></section> : <div className="conversation-thread" role="log" aria-label="Portfolio conversation" aria-live="polite" aria-relevant="additions">{messages.map((message, index) => <section className="conversation-turn" key={index} ref={index === messages.length - 1 ? latestRef : null}><div className="visitor-message"><span className="sr-only">You asked: </span>{message.prompt}</div><div className="portfolio-message"><div className="reply-author"><span className="reply-monogram">u.</span><strong>Usama’s portfolio</strong><span>Prepared response</span></div><AnimatedResponse active={index === messages.length - 1}><Reply topic={message.topic} /></AnimatedResponse></div></section>)}<div className="follow-up-prompts" aria-label="Explore next">{topics.filter(topic => topic.id !== activeTopic).slice(0, 4).map(topic => <button key={topic.id} onClick={() => ask(topic.prompt, topic.id)}>{topic.label}<Icon name="external" /></button>)}</div></div>}
       </main>
-      <footer className="conversation-composer"><form onSubmit={event => { event.preventDefault(); ask(input); }}><label className="sr-only" htmlFor="portfolio-question">Ask about Usama’s portfolio</label><textarea id="portfolio-question" ref={inputRef} rows="2" maxLength="500" value={input} onChange={event => setInput(event.target.value)} placeholder="Ask about my work, skills, or experience…" onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); ask(input); } }} /><div className="composer-bottom"><span><Icon name="chat" />A little curiosity goes a long way.</span><button type="submit" className="send-question" disabled={!input.trim()} aria-label="Send question"><Icon name="arrow" /></button></div></form><p>Prepared by Usama. No AI, just a more personal portfolio.</p></footer>
+      <footer className={`conversation-composer ${showAffordance ? 'composer-afford' : ''}`}><form onSubmit={event => { event.preventDefault(); ask(input); }}><label className="sr-only" htmlFor="portfolio-question">Ask about Usama’s portfolio</label><textarea id="portfolio-question" ref={inputRef} rows="2" maxLength="500" value={input} onChange={event => setInput(event.target.value)} placeholder="Ask about my work, skills, or experience…" onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); ask(input); } }} /><div className="composer-bottom"><span><Icon name="chat" />A little curiosity goes a long way.</span><button type="submit" className="send-question" disabled={!input.trim()} aria-label="Send question"><Icon name="arrow" /></button></div></form><p>Prepared by Usama. No AI, just a more personal portfolio.</p></footer>
     </div>
   </div>;
 }
