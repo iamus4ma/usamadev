@@ -28,7 +28,53 @@ const paths = {
 };
 
 function Icon({ name, ...props }) {
-  return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}><path d={paths[name] || paths.chat} /></svg>;
+  const iconRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const icon = iconRef.current;
+    const trigger = icon.closest('button, a, .conversation-welcome, .reply-note, .conversation-composer');
+    if (!trigger) return;
+    const motion = {
+      plus: { rotation: 90 },
+      arrow: { y: -3 },
+      external: { x: 2, y: -2 },
+      download: { y: 3 },
+      person: { y: -2, rotation: -6 },
+      grid: { rotation: 8, scale: 1.08 },
+      code: { scale: 1.12 },
+      case: { rotation: -8, y: -1 },
+      spark: { rotation: 35, scale: 1.1 },
+      chat: { rotation: -8, scale: 1.08 },
+      file: { rotation: -7, y: -2 },
+      mail: { x: 2, rotation: -8 },
+      sun: { rotation: 45 },
+      moon: { rotation: -20 },
+      menu: { scaleX: .85 },
+      close: { rotation: 90 },
+    };
+    const media = gsap.matchMedia();
+    media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', context => {
+      gsap.set(icon, { transformOrigin: '50% 50%' });
+      context.add('enter', () => {
+        if (trigger.matches(':disabled') || trigger.closest('[inert]')) return;
+        gsap.to(icon, { ...motion[name], duration: .24, ease: 'power2.out', overwrite: true });
+      });
+      context.add('leave', () => {
+        gsap.to(icon, { x: 0, y: 0, rotation: 0, scale: 1, duration: .18, ease: 'power2.out', overwrite: true });
+      });
+      trigger.addEventListener('pointerenter', context.enter);
+      trigger.addEventListener('pointerleave', context.leave);
+      trigger.addEventListener('pointercancel', context.leave);
+      return () => {
+        trigger.removeEventListener('pointerenter', context.enter);
+        trigger.removeEventListener('pointerleave', context.leave);
+        trigger.removeEventListener('pointercancel', context.leave);
+      };
+    });
+    return () => media.revert();
+  }, [name]);
+
+  return <svg ref={iconRef} data-icon={name} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}><path d={paths[name] || paths.chat} /></svg>;
 }
 
 function ExternalLink({ href, children, className = '' }) {
