@@ -10,6 +10,13 @@ export const topics = [
   { id: 'contact', label: 'Get in touch', prompt: 'How can I contact Usama?', icon: 'mail', hint: 'Start a real conversation' },
 ];
 
+export const tourSteps = [
+  { topic: 'about', label: 'Meet Usama', prompt: 'Give me a quick introduction to Usama' },
+  { topic: 'projects', label: 'Selected projects', prompt: 'Show me a few of his projects' },
+  { topic: 'experience', label: 'Experience', prompt: 'Walk me through his experience' },
+  { topic: 'contact', label: 'Get in touch', prompt: 'How can we work together?' },
+];
+
 export const skillGroups = [
   { title: 'Frontend', skills: ['React', 'JavaScript', 'TypeScript', 'Redux Toolkit', 'Tailwind CSS', 'HTML', 'CSS', 'Bootstrap'] },
   { title: 'Mobile', skills: ['React Native', 'Expo', 'Mobile applications'] },
@@ -66,6 +73,7 @@ export function matchTopic(input) {
   const exact = topics.find(topic => topic.prompt.toLowerCase().replace(/[’']/g, '') === text);
   if (exact) return exact.id;
   const rules = [
+    ['tour', /\b(tour|walkthrough|guide me|show me around)\b/],
     ['resume', /\b(resume|résumé|cv|download)\b/],
     ['certifications', /\b(certifications?|certificates?|credentials?|courses?)\b/],
     ['contact', /\b(contact|email|phone|call|number|reach|hire|hiring|touch|linkedin|github|available|availability)\b/],

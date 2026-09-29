@@ -62,6 +62,29 @@ body { margin: 0; }
 .brand-muted { font-weight: 400; color: var(--chat-muted); font-size: 12px; }
 .conversation-app .new-conversation { display: flex; align-items: center; gap: 10px; border: 1px solid var(--chat-rule); background: var(--chat-surface); border-radius: 8px; padding: 11px 12px; margin: 32px 0; font-size: 12px; white-space: nowrap; }
 .new-conversation:hover { border-color: var(--chat-muted); }
+.conversation-app .sidebar-tour { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: -18px 0 24px; font-size: 12px; border-radius: 7px; }
+.sidebar-tour > svg:last-child { margin-left: auto; width: 15px; }
+.sidebar-tour:hover { background: var(--chat-hover); }
+.conversation-app .tour-invitation { display: flex; align-items: center; gap: 10px; padding: 12px 0; margin: -8px 0 18px; color: var(--chat-accent); font-size: 12px; }
+.tour-invitation small { color: var(--chat-muted); font-size: 10px; }
+.tour-invitation:hover span { text-decoration: underline; text-underline-offset: 4px; }
+.tour-invitation > svg:last-child { width: 15px; }
+.tour-controls { max-width: 720px; margin: 0 auto 12px; padding: 10px 14px; border: 1px solid var(--chat-rule); border-radius: 10px; background: var(--chat-soft); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tour-progress { min-width: 0; flex: 1; max-width: 250px; }
+.tour-progress > span { display: block; font-size: 10px; color: var(--chat-muted); }
+.tour-progress strong { color: var(--chat-ink); font-weight: 500; margin-left: 8px; }
+.tour-progress-track { display: flex; gap: 4px; margin-top: 7px; }
+.tour-progress-track i { height: 3px; flex: 1; background: var(--chat-rule); border-radius: 2px; }
+.tour-progress-track i.is-complete { background: var(--chat-accent); }
+.tour-actions { display: flex; align-items: center; gap: 12px; }
+.conversation-app .tour-actions button { font-size: 11px; white-space: nowrap; }
+.conversation-app .tour-next { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 6px; background: var(--chat-ink); color: var(--chat-on-ink); }
+.tour-next svg { width: 14px; height: 14px; }
+@media (max-width: 480px) {
+  .tour-controls { gap: 10px; padding: 10px; }
+  .tour-progress strong { display: block; margin-left: 0; }
+  .tour-actions { gap: 10px; }
+}
 .sidebar-label { color: var(--chat-muted); font-size: 11px; margin: 0 12px 10px; }
 .conversation-app .topic-nav { display: flex; align-items: center; width: 100%; gap: 12px; border-radius: 7px; padding: 10px 12px; font-size: 12px; margin-bottom: 4px; white-space: nowrap; }
 .topic-nav svg { width: 18px; height: 18px; color: var(--chat-muted); }

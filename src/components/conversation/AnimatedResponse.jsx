@@ -36,6 +36,7 @@ export default function AnimatedResponse({ active, children }) {
     const typing = root.querySelector('.response-typing');
     const words = body.querySelectorAll(':scope > .response-text .response-word, .about-profile-info > .response-text .response-word');
     const details = [...body.querySelectorAll(':scope > :not(.response-text)')].flatMap(element =>
+      element.matches('.project-gallery') ? [...element.querySelectorAll('.project-story')] :
       element.matches('.about-profile') ? [...element.querySelectorAll('.about-photo, .reply-note')] :
       element.matches('.conversation-projects, .conversation-quotes, .conversation-timeline, .skill-groups, .conversation-services, .certification-list')
         ? [...element.children] : [element]
