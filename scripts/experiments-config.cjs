@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const { isDeepStrictEqual } = require('node:util');
 
 function createConfig(experiments) {
   const slugs = new Set();
@@ -39,10 +40,13 @@ function createConfig(experiments) {
 if (require.main === module) {
   const root = path.resolve(__dirname, '..');
   const experiments = JSON.parse(fs.readFileSync(path.join(root, 'src/components/experiments/registry.json'), 'utf8'));
-  const output = `${JSON.stringify(createConfig(experiments), null, 2)}\n`;
+  const expected = createConfig(experiments);
+  const output = `${JSON.stringify(expected, null, 2)}\n`;
   const target = path.join(root, 'vercel.json');
   if (process.argv.includes('--check')) {
-    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8').replace(/\r\n/g, '\n') !== output) {
+    let current;
+    try { current = JSON.parse(fs.readFileSync(target, 'utf8')); } catch { /* Missing or invalid config is out of date. */ }
+    if (!isDeepStrictEqual(current, expected)) {
       console.error('Experiment routes are out of date. Run npm run experiments:sync and commit vercel.json.');
       process.exitCode = 1;
     }
