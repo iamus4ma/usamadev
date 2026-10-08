@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Conversation from './Conversation';
 import { matchTopic, topics } from './content';
@@ -13,12 +13,38 @@ function setReducedMotion(reduced) {
 
 beforeEach(() => { localStorage.clear(); setReducedMotion(true); });
 
-test('shows the cursor-following mascot without click reactions in the welcome avatar', () => {
+test('welcome mascot reacts to clicks', () => {
   render(<Conversation />);
   const avatar = document.querySelector('.welcome-avatar');
-  expect(avatar.querySelector('.welcome-mascot')).toHaveAttribute('aria-hidden', 'true');
-  expect(avatar.querySelectorAll('.mascot-sprite')).toHaveLength(1);
-  expect(within(avatar).queryByRole('button')).not.toBeInTheDocument();
+  expect(avatar.querySelectorAll('.mascot-sprite')).toHaveLength(2);
+  fireEvent.click(within(avatar).getByRole('button', { name: 'Say hello to Usama' }));
+  expect(avatar.querySelector('.mascot-sprite:last-child')).toHaveStyle({ opacity: '1' });
+});
+
+test('welcome mascot blinks on touch screens and stays still with reduced motion', () => {
+  jest.useFakeTimers();
+  window.matchMedia = jest.fn(query => ({
+    matches: query.includes('pointer: coarse'),
+    addEventListener: jest.fn(), removeEventListener: jest.fn(),
+  }));
+  const { unmount } = render(<Conversation />);
+  const blink = document.querySelector('.welcome-mascot .mascot-sprite:last-child');
+  expect(blink).toHaveStyle({ opacity: '0' });
+  act(() => jest.advanceTimersByTime(8000));
+  expect(blink).toHaveStyle({ opacity: '1' });
+  act(() => jest.advanceTimersByTime(160));
+  expect(blink).toHaveStyle({ opacity: '0' });
+  unmount();
+  window.matchMedia = jest.fn(query => ({
+    matches: query.includes('pointer: coarse') || query.includes('prefers-reduced-motion'),
+    addEventListener: jest.fn(), removeEventListener: jest.fn(),
+  }));
+  const reduced = render(<Conversation />);
+  const still = document.querySelector('.welcome-mascot .mascot-sprite:last-child');
+  act(() => jest.advanceTimersByTime(8000));
+  expect(still).toHaveStyle({ opacity: '0' });
+  reduced.unmount();
+  jest.useRealTimers();
 });
 
 test.each(topics)('recognizes the prepared $id prompt', topic => {

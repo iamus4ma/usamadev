@@ -22,7 +22,7 @@ function wrap(angle) {
   return Math.atan2(Math.sin(angle), Math.cos(angle));
 }
 
-export default function Mascot({ className = '', interactive = true }) {
+export default function Mascot({ className = '', interactive = true, idleBlink = false }) {
   const buttonRef = useRef(null);
   const squashRef = useRef(null);
   const timersRef = useRef([]);
@@ -67,6 +67,33 @@ export default function Mascot({ className = '', interactive = true }) {
     animationRef.current?.cancel();
   }, []);
 
+  useEffect(() => {
+    if (!idleBlink) return;
+    const touch = window.matchMedia?.('(hover: none) and (pointer: coarse)');
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    let interval;
+    let blinkTimeout;
+    function update() {
+      window.clearInterval(interval);
+      window.clearTimeout(blinkTimeout);
+      if (!touch?.matches || reduced?.matches) { setReaction(null); return; }
+      interval = window.setInterval(() => {
+        if (document.hidden) return;
+        setReaction('blink');
+        blinkTimeout = window.setTimeout(() => setReaction(null), 160);
+      }, 8000);
+    }
+    update();
+    touch?.addEventListener('change', update);
+    reduced?.addEventListener('change', update);
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(blinkTimeout);
+      touch?.removeEventListener('change', update);
+      reduced?.removeEventListener('change', update);
+    };
+  }, [idleBlink]);
+
   function sayHello() {
     timersRef.current.forEach(window.clearTimeout);
     timersRef.current = [];
@@ -96,7 +123,7 @@ export default function Mascot({ className = '', interactive = true }) {
 
   const sprites = <span ref={squashRef} className="mascot-squash">
     <span className="mascot-sprite" style={directionStyle} aria-hidden="true" />
-    {interactive && <span className="mascot-sprite" style={reactionStyle} aria-hidden="true" />}
+    {(interactive || idleBlink) && <span className="mascot-sprite" style={reactionStyle} aria-hidden="true" />}
   </span>;
 
   return interactive ? <button ref={buttonRef} type="button" className={`mascot-button ${className}`.trim()} aria-label="Say hello to Usama" onClick={sayHello}>

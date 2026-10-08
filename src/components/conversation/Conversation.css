@@ -114,7 +114,7 @@ body { margin: 0; }
 .conversation-main { position: relative; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior-y: contain; padding: 24px 32px 40px; scrollbar-width: thin; scroll-padding-top: 28px; }
 .conversation-welcome { max-width: 720px; margin: clamp(16px, 6vh, 80px) auto 0; }
 .welcome-avatar { display: flex; align-items: flex-end; margin-bottom: 8px; }
-.welcome-avatar .mascot-button { width: 152px; height: 152px; cursor: default; }
+.welcome-avatar .mascot-button { width: 152px; height: 152px; }
 .welcome-intro { color: var(--chat-muted); font-size: 12px; margin-bottom: 12px; }
 .conversation-app h1 { font-family: var(--chat-display); font-size: clamp(30px, 3.5vw, 47px); font-weight: 400; line-height: 1.18; letter-spacing: -1.7px; }
 .conversation-app h1 span { color: var(--chat-muted); }
@@ -170,6 +170,8 @@ body { margin: 0; }
 .about-photo figcaption { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
 .about-photo figcaption strong { font-size: 12px; font-weight: 500; }
 .about-photo figcaption > span { color: var(--chat-muted); font-size: 10px; }
+.about-photo .about-mascot-hint { display: none; }
+@media (hover: none) { .about-photo .about-mascot-hint { display: block; } }
 .about-profile-info { min-width: 0; }
 .about-profile-info > p { font-size: 13px; line-height: 1.95; margin-bottom: 16px; }
 .about-profile-info .reply-note { align-items: flex-start; font-size: 11px; }
