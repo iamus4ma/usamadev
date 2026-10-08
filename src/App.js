@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css';
 import Conversation from './components/conversation/Conversation';
+import StandaloneExperiment from './components/experiments/StandaloneExperiment';
+import experiments from './components/experiments/registry.json';
 import { Helmet } from 'react-helmet';
 
 function App() {
+  const standaloneSlug = window.location.pathname.match(/^\/experiments\/([a-z0-9-]+)\/fullscreen\/?$/)?.[1];
+  const standaloneExperiment = experiments.find(experiment => experiment.slug === standaloneSlug && ['pending', 'ready'].includes(experiment.status));
+
   return (
     <>
       <Helmet>
@@ -49,7 +54,7 @@ function App() {
           `}
         </script>
       </Helmet>
-      <Conversation />
+      {standaloneExperiment ? <StandaloneExperiment experiment={standaloneExperiment} /> : <Conversation />}
     </>
   );
 }

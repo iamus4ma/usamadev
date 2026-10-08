@@ -58,7 +58,8 @@ body { margin: 0; }
 .conversation-skip:focus { transform: none; }
 .conversation-sidebar { background: var(--chat-sidebar); border-right: 1px solid var(--chat-rule); padding: 30px 18px 16px; display: flex; flex-direction: column; min-height: 0; overflow-y: auto; }
 .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 0 8px; font-weight: 600; letter-spacing: -.4px; white-space: nowrap; }
-.brand-monogram { font-family: var(--chat-display); font-size: 36px; line-height: 1; }
+.brand-favicon { display: block; width: 36px; height: 36px; object-fit: contain; flex-shrink: 0; }
+.conversation-app[data-chat-theme='dark'] .brand-favicon { background: #f3f3ef; border-radius: 6px; padding: 2px; }
 .brand-muted { font-weight: 400; color: var(--chat-muted); font-size: 12px; }
 .conversation-app .new-conversation { display: flex; align-items: center; gap: 10px; border: 1px solid var(--chat-rule); background: var(--chat-surface); border-radius: 8px; padding: 11px 12px; margin: 32px 0; font-size: 12px; white-space: nowrap; }
 .new-conversation:hover { border-color: var(--chat-muted); }

@@ -1,0 +1,69 @@
+import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import Conversation from '../conversation/Conversation';
+import Experiments from './Experiments';
+import App from '../../App';
+
+beforeEach(() => {
+  window.history.replaceState({}, '', '/');
+  window.matchMedia = jest.fn(() => ({ matches: true, addEventListener: jest.fn(), removeEventListener: jest.fn() }));
+});
+afterEach(() => window.history.replaceState({}, '', '/'));
+
+test('cards distinguish playable and local-only projects', () => {
+  render(<Experiments />);
+  expect(screen.getAllByRole('article')).toHaveLength(3);
+  expect(screen.getAllByRole('link', { name: /Open Experiment/ }).map(link => link.getAttribute('href'))).toEqual(['/experiments/pixel-pong', '/experiments/animated-developer']);
+  expect(screen.getByRole('link', { name: /View project/ })).toHaveAttribute('href', '/experiments/linkedin-companion');
+  expect(screen.getByText('Local project')).toBeInTheDocument();
+  expect(screen.queryByText('Example')).not.toBeInTheDocument();
+  expect(document.querySelector('a[href*="YOUR_USERNAME"]')).toBeNull();
+});
+
+test.each(['/experiments', '/experiments/'])('direct index route %s uses the existing shell without a composer', pathname => {
+  window.history.replaceState({}, '', pathname);
+  render(<Conversation />);
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Small ideas. Room to play.');
+  expect(screen.getByRole('link', { name: 'Experiments' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.queryByRole('textbox')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: 'About Usama' }));
+  expect(window.location.pathname).toBe('/');
+  expect(screen.getByRole('textbox')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'A little about Usama.' })).toBeInTheDocument();
+  window.history.replaceState({}, '', pathname);
+  fireEvent.popState(window);
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Small ideas. Room to play.');
+});
+
+test('LinkedIn Companion has a source page without a live demo', () => {
+  render(<Experiments pathname="/experiments/linkedin-companion" />);
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('LinkedIn Companion');
+  expect(screen.getByText('Local project: No live demo')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'View source and setup' })).toHaveAttribute('href', 'https://github.com/iamus4ma/linkedin-companion');
+  expect(screen.queryByRole('iframe')).not.toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: /Open full page/ })).not.toBeInTheDocument();
+});
+
+test('unknown experiments give a useful way back', () => {
+  render(<Experiments pathname="/experiments/not-real" />);
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Experiment not found');
+  expect(screen.getByRole('link', { name: /All experiments/ })).toBeInTheDocument();
+});
+
+test('Pixel Pong embeds the game inside its portfolio route', () => {
+  render(<Experiments pathname="/experiments/pixel-pong" />);
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Pixel Pong');
+  expect(screen.getByTitle('Pixel Pong live experiment')).toHaveAttribute('src', 'https://pixel-pong-six.vercel.app');
+  expect(screen.getByRole('link', { name: /Open full page/ })).toHaveAttribute('href', '/experiments/pixel-pong/fullscreen');
+  expect(screen.queryByRole('link', { name: /Open live experiment/ })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /GitHub/ })).toHaveAttribute('href', 'https://github.com/iamus4ma/pixel-pong-game');
+});
+
+test('full-page route keeps the game on the portfolio domain without the portfolio shell', () => {
+  window.history.replaceState({}, '', '/experiments/pixel-pong/fullscreen');
+  render(<App />);
+  expect(screen.getByTitle('Pixel Pong live experiment')).toHaveAttribute('src', 'https://pixel-pong-six.vercel.app');
+  expect(screen.queryByRole('navigation', { name: 'Explore portfolio' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Back to Pixel Pong in the portfolio' })).toHaveAttribute('href', '/experiments/pixel-pong');
+});

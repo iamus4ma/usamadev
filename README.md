@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+## Portfolio experiments
+
+See [the experiments setup guide](docs/experiments.md) for the central registry, independent Vercel deployments, asset/base-path configuration, and deployment checks. After changing `src/components/experiments/registry.json`, run `npm run experiments:sync` and commit the generated `vercel.json`.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

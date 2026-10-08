@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "create-react-app",
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "rewrites": [
+    {
+      "source": "/experiments/pixel-pong/fullscreen",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/experiments",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/experiments/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}

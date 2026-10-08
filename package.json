@@ -27,7 +27,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "experiments:sync": "node scripts/experiments-config.cjs",
+    "experiments:check": "node scripts/experiments-config.cjs --check",
+    "test:experiments": "node --test scripts/experiments-config.test.cjs",
+    "prebuild": "npm run experiments:check"
   },
   "eslintConfig": {
     "extends": [

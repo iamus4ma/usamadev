@@ -1,0 +1,24 @@
+diff --git a/package.json b/package.json
+--- a/package.json
++++ b/package.json
+@@ -1,5 +1,6 @@
+ {
+   "name": "iamusama-pong",
+   "version": "0.1.0",
++  "homepage": "/experiments/pixel-pong",
+   "private": true,
+   "dependencies": {
+diff --git a/vercel.json b/vercel.json
+new file mode 100644
+--- /dev/null
++++ b/vercel.json
+@@ -0,0 +1,9 @@
++{
++  "$schema": "https://openapi.vercel.sh/vercel.json",
++  "rewrites": [
++    { "source": "/experiments/pixel-pong/static/:path*", "destination": "/static/:path*" },
++    { "source": "/experiments/pixel-pong/favicon.ico", "destination": "/favicon.ico" },
++    { "source": "/experiments/pixel-pong", "destination": "/index.html" },
++    { "source": "/experiments/pixel-pong/:path*", "destination": "/index.html" }
++  ]
++}

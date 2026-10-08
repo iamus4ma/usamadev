@@ -8,6 +8,7 @@ import './Conversation.css';
 import { gsap } from 'gsap';
 import AnimatedResponse, { ResponseText, useReducedMotion } from './AnimatedResponse';
 import ProjectGallery from './ProjectGallery';
+import Experiments from '../experiments/Experiments';
 
 const paths = {
   plus: 'M12 5v14M5 12h14',
@@ -18,6 +19,7 @@ const paths = {
   person: 'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4 21v-2a8 8 0 0 1 16 0v2',
   grid: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
   code: 'm8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18',
+  lab: 'M8 3h8M10 3v7L4.3 19A2 2 0 0 0 6 22h12a2 2 0 0 0 1.7-3L14 10V3M7 16h10',
   case: 'M9 6V3h6v3M3 6h18v14H3zM3 11c6 4 12 4 18 0M12 11v4',
   spark: 'm12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z',
   chat: 'M21 11a9 9 0 0 1-9 9H3l2-5a9 9 0 1 1 16-4Z',
@@ -43,6 +45,7 @@ function Icon({ name, ...props }) {
       person: { y: -2, rotation: -6 },
       grid: { rotation: 8, scale: 1.08 },
       code: { scale: 1.12 },
+      lab: { rotation: -8, y: -2 },
       case: { rotation: -8, y: -1 },
       spark: { rotation: 35, scale: 1.1 },
       chat: { rotation: -8, scale: 1.08 },
@@ -118,6 +121,18 @@ function Reply({ topic, featured = false }) {
 }
 
 export default function Conversation() {
+  const [pathname, setPathname] = useState(() => window.location.pathname);
+  const isExperiments = pathname === '/experiments' || pathname.startsWith('/experiments/');
+  useEffect(() => {
+    const onPopState = () => setPathname(window.location.pathname);
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+  function returnToConversation() {
+    if (!isExperiments) return;
+    window.history.pushState({}, '', '/');
+    setPathname('/');
+  }
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -200,6 +215,7 @@ export default function Conversation() {
 
   function ask(prompt, topic = matchTopic(prompt), nextTourStep = null) {
     if (!prompt.trim()) return;
+    returnToConversation();
     if (topic === 'tour') { startTour(); return; }
     setTourStep(nextTourStep);
     setMessages(previous => [...previous, { prompt: prompt.trim(), topic, tourStep: nextTourStep }]);
@@ -224,6 +240,7 @@ export default function Conversation() {
   }
 
   function reset() {
+    returnToConversation();
     setTourStep(null);
     setMessages([]);
     setInput('');
@@ -252,18 +269,18 @@ export default function Conversation() {
     <a className="conversation-skip" href="#conversation-main">Skip to conversation</a>
     {menuOpen && <div className="navigation-backdrop" onClick={closeMenu} aria-hidden="true" />}
     <aside ref={sidebarRef} id="portfolio-sidebar" className={`conversation-sidebar ${menuOpen ? 'is-open' : ''}`} role={menuOpen ? 'dialog' : undefined} aria-modal={menuOpen ? 'true' : undefined} aria-label="Portfolio navigation">
-      <div className="sidebar-brand"><span className="brand-monogram">u.</span><span>usama<span className="brand-muted"> / portfolio</span></span><button className="icon-button mobile-close" onClick={closeMenu} aria-label="Close navigation"><Icon name="close" /></button></div>
+      <div className="sidebar-brand"><img className="brand-favicon" src={`${process.env.PUBLIC_URL}/favicon.png`} alt="" width="36" height="36" /><span>usama<span className="brand-muted">Dev</span></span><button className="icon-button mobile-close" onClick={closeMenu} aria-label="Close navigation"><Icon name="close" /></button></div>
       <button className="new-conversation" onClick={reset}><Icon name="plus" />New conversation</button>
       <button className="sidebar-tour" onClick={startTour}><Icon name="spark" />Quick tour<Icon name="external" /></button>
-      <nav aria-label="Explore portfolio"><p className="sidebar-label">Explore</p>{topics.map(topic => <button key={topic.id} className={`topic-nav ${activeTopic === topic.id ? 'is-active' : ''}`} aria-current={activeTopic === topic.id ? 'true' : undefined} onClick={() => ask(topic.prompt, topic.id)}><Icon name={topic.icon} /><span>{topic.label}</span>{topic.id === 'projects' && <small>{projects.length}</small>}</button>)}</nav>
+      <nav aria-label="Explore portfolio"><p className="sidebar-label">Explore</p>{topics.map(topic => <button key={topic.id} className={`topic-nav ${!isExperiments && activeTopic === topic.id ? 'is-active' : ''}`} aria-current={!isExperiments && activeTopic === topic.id ? 'true' : undefined} onClick={() => ask(topic.prompt, topic.id)}><Icon name={topic.icon} /><span>{topic.label}</span>{topic.id === 'projects' && <small>{projects.length}</small>}</button>)}<a className={`topic-nav ${isExperiments ? 'is-active' : ''}`} href="/experiments" aria-current={isExperiments ? 'page' : undefined}><Icon name="lab" /><span>Experiments</span></a></nav>
       <div className="sidebar-bottom"><div className="sidebar-socials"><ExternalLink href="https://github.com/iamus4ma">GitHub</ExternalLink><ExternalLink href="https://www.linkedin.com/in/iamus4ma/">LinkedIn</ExternalLink></div><div className="sidebar-profile"><img src={portrait} alt="Usama Hassan" width="38" height="38" /><div><strong>Usama Hassan</strong><span>Full Stack Developer</span></div><button className="icon-button" onClick={() => setDark(value => !value)} aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}><Icon name={dark ? 'sun' : 'moon'} /></button></div></div>
     </aside>
     <div className="conversation-workspace">
-      <header className="conversation-header"><div><button ref={menuButtonRef} className="icon-button mobile-menu" aria-expanded={menuOpen} aria-controls="portfolio-sidebar" aria-label="Toggle navigation" onClick={() => setMenuOpen(value => !value)}><Icon name="menu" /></button><span>Usama’s portfolio <span className="header-divider">/</span> <span className="header-muted">A conversation</span></span></div><a href="mailto:usama.0.vip@gmail.com">Let’s talk<Icon name="external" /></a></header>
-      <main ref={mainRef} id="conversation-main" className={`conversation-main ${messages.length ? 'has-messages' : ''}`} tabIndex="-1">
-        {!messages.length ? <section className="conversation-welcome"><div className="welcome-avatar"><img src={portrait} alt="" width="64" height="64" /><span><Icon name="code" /></span></div><p className="welcome-intro">A different way to get to know me.</p><h1>Hi, I’m Usama.<br /><span>What would you like to explore?</span></h1><p className="welcome-description">Full stack developer. Thoughtful interfaces.<br className="desktop-break" /> Web and mobile, from interface to API.</p><button className="tour-invitation" onClick={startTour}><Icon name="spark" /><span>Take a quick tour</span><small>4 stops</small><Icon name="external" /></button><div className="suggested-prompts">{['projects', 'skills', 'about', 'contact'].map(id => { const topic = topics.find(item => item.id === id); return <button key={id} onClick={() => ask(topic.prompt, id)}><Icon name={topic.icon} /><strong>{topic.prompt}</strong><span>{topic.hint}</span><Icon name="external" className="prompt-arrow" /></button>; })}</div></section> : <div className="conversation-thread" role="log" aria-label="Portfolio conversation" aria-live="polite" aria-relevant="additions">{messages.map((message, index) => <section className="conversation-turn" key={index} ref={index === messages.length - 1 ? latestRef : null}><div className="visitor-message"><span className="sr-only">You asked: </span>{message.prompt}</div><div className="portfolio-message"><div className="reply-author"><span className="reply-monogram">u.</span><strong>Usama’s portfolio</strong><span>Prepared response</span></div><AnimatedResponse active={index === messages.length - 1}><Reply topic={message.topic} featured={message.tourStep === 1} /></AnimatedResponse></div></section>)}<div className="follow-up-prompts" aria-label="Explore next">{topics.filter(topic => topic.id !== activeTopic).slice(0, 4).map(topic => <button key={topic.id} onClick={() => ask(topic.prompt, topic.id)}>{topic.label}<Icon name="external" /></button>)}</div></div>}
+      <header className="conversation-header"><div><button ref={menuButtonRef} className="icon-button mobile-menu" aria-expanded={menuOpen} aria-controls="portfolio-sidebar" aria-label="Toggle navigation" onClick={() => setMenuOpen(value => !value)}><Icon name="menu" /></button><span>Usama’s portfolio <span className="header-divider">/</span> <span className="header-muted">{isExperiments ? 'Experiments' : 'A conversation'}</span></span></div><a href="mailto:usama.0.vip@gmail.com">Let’s talk<Icon name="external" /></a></header>
+      <main ref={mainRef} id="conversation-main" className={`conversation-main ${messages.length || isExperiments ? 'has-messages' : ''}`} tabIndex="-1">
+        {isExperiments ? <Experiments pathname={pathname} /> : !messages.length ? <section className="conversation-welcome"><div className="welcome-avatar"><img src={portrait} alt="" width="64" height="64" /><span><Icon name="code" /></span></div><p className="welcome-intro">A different way to get to know me.</p><h1>Hi, I’m Usama.<br /><span>What would you like to explore?</span></h1><p className="welcome-description">Full stack developer. Thoughtful interfaces.<br className="desktop-break" /> Web and mobile, from interface to API.</p><button className="tour-invitation" onClick={startTour}><Icon name="spark" /><span>Take a quick tour</span><small>4 stops</small><Icon name="external" /></button><div className="suggested-prompts">{['projects', 'skills', 'about', 'contact'].map(id => { const topic = topics.find(item => item.id === id); return <button key={id} onClick={() => ask(topic.prompt, id)}><Icon name={topic.icon} /><strong>{topic.prompt}</strong><span>{topic.hint}</span><Icon name="external" className="prompt-arrow" /></button>; })}</div></section> : <div className="conversation-thread" role="log" aria-label="Portfolio conversation" aria-live="polite" aria-relevant="additions">{messages.map((message, index) => <section className="conversation-turn" key={index} ref={index === messages.length - 1 ? latestRef : null}><div className="visitor-message"><span className="sr-only">You asked: </span>{message.prompt}</div><div className="portfolio-message"><div className="reply-author"><span className="reply-monogram">u.</span><strong>Usama’s portfolio</strong><span>Prepared response</span></div><AnimatedResponse active={index === messages.length - 1}><Reply topic={message.topic} featured={message.tourStep === 1} /></AnimatedResponse></div></section>)}<div className="follow-up-prompts" aria-label="Explore next">{topics.filter(topic => topic.id !== activeTopic).slice(0, 4).map(topic => <button key={topic.id} onClick={() => ask(topic.prompt, topic.id)}>{topic.label}<Icon name="external" /></button>)}</div></div>}
       </main>
-      <footer className={`conversation-composer ${showAffordance ? 'composer-afford' : ''}`}>{tourStep !== null && <section className="tour-controls" aria-label="Guided tour"><div className="tour-progress"><span aria-live="polite">{tourStep + 1} / {tourSteps.length} <strong>{tourSteps[tourStep].label}</strong></span><div className="tour-progress-track" aria-hidden="true">{tourSteps.map((step, index) => <i key={step.topic} className={index <= tourStep ? 'is-complete' : ''} />)}</div></div><div className="tour-actions"><button onClick={endTour}>Skip tour</button><button ref={tourNextRef} className="tour-next" onClick={nextTourStop}>{tourStep === tourSteps.length - 1 ? 'Finish tour' : 'Next'}<Icon name="external" /></button></div></section>}<form onSubmit={event => { event.preventDefault(); ask(input); }}><label className="sr-only" htmlFor="portfolio-question">Ask about Usama’s portfolio</label><textarea id="portfolio-question" ref={inputRef} rows="2" maxLength="500" value={input} onChange={event => setInput(event.target.value)} placeholder="Ask about my work, skills, or experience…" onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); ask(input); } }} /><div className="composer-bottom"><span><Icon name="chat" />A little curiosity goes a long way.</span><button type="submit" className="send-question" disabled={!input.trim()} aria-label="Send question"><Icon name="arrow" /></button></div></form><p>Prepared by Usama. No AI, just a more personal portfolio.</p></footer>
+      {!isExperiments && <footer className={`conversation-composer ${showAffordance ? 'composer-afford' : ''}`}>{tourStep !== null && <section className="tour-controls" aria-label="Guided tour"><div className="tour-progress"><span aria-live="polite">{tourStep + 1} / {tourSteps.length} <strong>{tourSteps[tourStep].label}</strong></span><div className="tour-progress-track" aria-hidden="true">{tourSteps.map((step, index) => <i key={step.topic} className={index <= tourStep ? 'is-complete' : ''} />)}</div></div><div className="tour-actions"><button onClick={endTour}>Skip tour</button><button ref={tourNextRef} className="tour-next" onClick={nextTourStop}>{tourStep === tourSteps.length - 1 ? 'Finish tour' : 'Next'}<Icon name="external" /></button></div></section>}<form onSubmit={event => { event.preventDefault(); ask(input); }}><label className="sr-only" htmlFor="portfolio-question">Ask about Usama’s portfolio</label><textarea id="portfolio-question" ref={inputRef} rows="2" maxLength="500" value={input} onChange={event => setInput(event.target.value)} placeholder="Ask about my work, skills, or experience…" onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); ask(input); } }} /><div className="composer-bottom"><span><Icon name="chat" />A little curiosity goes a long way.</span><button type="submit" className="send-question" disabled={!input.trim()} aria-label="Send question"><Icon name="arrow" /></button></div></form><p>Prepared by Usama. No AI, just a more personal portfolio.</p></footer>}
     </div>
   </div>;
 }

@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "pixel-pong",
+    "name": "Pixel Pong",
+    "description": "A playable pixel-art Pong game with custom word challenges, adjustable ball speed, scoring, lives, and keyboard and touch controls.",
+    "technologies": [
+      "React",
+      "JavaScript",
+      "Canvas API"
+    ],
+    "githubUrl": "https://github.com/iamus4ma/pixel-pong-game",
+    "deploymentUrl": "https://pixel-pong-six.vercel.app",
+    "status": "pending",
+    "upstreamPath": ""
+  },
+  {
+    "slug": "animated-developer",
+    "name": "Animated Developer",
+    "description": "An interactive 3D character from my original portfolio. Rotate the model and switch between idle, salute, and clapping animations.",
+    "technologies": ["React", "React Three Fiber", "Three.js"],
+    "githubUrl": "https://github.com/iamus4ma/usamadev",
+    "status": "inline"
+  },
+  {
+    "slug": "linkedin-companion",
+    "name": "LinkedIn Companion",
+    "description": "A local companion and dashboard for finding LinkedIn conversations and jobs, drafting comments, and preparing tailored application documents for review.",
+    "technologies": [
+      "React",
+      "Node.js",
+      "Playwright",
+      "Ollama"
+    ],
+    "highlights": [
+      "Discover posts and jobs, then review suggested comments and saved opportunities.",
+      "Prepare tailored resumes and cover letters from a master CV.",
+      "Review and approve content before filling supported application forms."
+    ],
+    "githubUrl": "https://github.com/iamus4ma/linkedin-companion",
+    "status": "local"
+  }
+]
