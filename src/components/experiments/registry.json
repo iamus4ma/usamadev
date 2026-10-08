@@ -22,6 +22,14 @@
     "status": "inline"
   },
   {
+    "slug": "meet-usama",
+    "name": "Meet Usama",
+    "description": "A playful illustrated mascot that follows your cursor and reacts when you say hello.",
+    "technologies": ["React", "CSS sprite sheets", "Pointer Events"],
+    "githubUrl": "https://github.com/iamus4ma/usamadev",
+    "status": "inline"
+  },
+  {
     "slug": "linkedin-companion",
     "name": "LinkedIn Companion",
     "description": "A local companion and dashboard for finding LinkedIn conversations and jobs, drafting comments, and preparing tailored application documents for review.",

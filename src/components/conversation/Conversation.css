@@ -113,9 +113,8 @@ body { margin: 0; }
 /* Keep absolutely positioned screen-reader labels inside their scroll container. */
 .conversation-main { position: relative; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior-y: contain; padding: 24px 32px 40px; scrollbar-width: thin; scroll-padding-top: 28px; }
 .conversation-welcome { max-width: 720px; margin: clamp(16px, 6vh, 80px) auto 0; }
-.welcome-avatar { display: flex; align-items: flex-end; margin-bottom: 24px; }
-.welcome-avatar > img { width: 64px; height: 64px; object-fit: cover; border-radius: 50%; }
-.welcome-avatar > span { display: inline-flex; background: var(--chat-paper); color: var(--chat-accent); border: 1px solid var(--chat-rule); border-radius: 50%; padding: 7px; margin-left: -13px; margin-bottom: -3px; }
+.welcome-avatar { display: flex; align-items: flex-end; margin-bottom: 8px; }
+.welcome-avatar .mascot-button { width: 152px; height: 152px; cursor: default; }
 .welcome-intro { color: var(--chat-muted); font-size: 12px; margin-bottom: 12px; }
 .conversation-app h1 { font-family: var(--chat-display); font-size: clamp(30px, 3.5vw, 47px); font-weight: 400; line-height: 1.18; letter-spacing: -1.7px; }
 .conversation-app h1 span { color: var(--chat-muted); }
@@ -157,19 +156,17 @@ body { margin: 0; }
 .conversation-turn { margin: 12px 0 42px; }
 .visitor-message { width: fit-content; max-width: 88%; margin-left: auto; margin-bottom: 28px; background: var(--chat-sidebar); padding: 12px 18px; border-radius: 18px 18px 4px 18px; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 13px; }
 .reply-author { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-.reply-monogram { font-family: var(--chat-display); border: 1px solid var(--chat-rule); border-radius: 50%; width: 30px; height: 30px; display: grid; place-items: center; font-size: 24px; line-height: 1; }
+.reply-avatar { flex: 0 0 40px; width: 40px; height: 40px; padding: 3px; border: 1px solid var(--chat-rule); border-radius: 50%; background: #f3f3ef; object-fit: contain; }
 .reply-author strong { font-weight: 500; font-size: 12px; }
 .reply-author > span:last-child { font-size: 9px; color: var(--chat-muted); margin-left: auto; }
-.reply-content { padding-left: 40px; }
+.reply-content { padding-left: 50px; }
 .reply-content h2 { font-family: var(--chat-display); font-weight: 400; font-size: 29px; letter-spacing: -.7px; line-height: 1.25; margin-bottom: 16px; }
 .reply-content > p { margin-bottom: 16px; font-size: 13px; line-height: 1.95; }
 .reply-note { display: flex; align-items: center; gap: 10px; color: var(--chat-accent); margin-top: 24px; font-size: 12px; }
 .about-profile { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); align-items: start; gap: 28px; margin-top: 24px; }
 .about-photo { min-width: 0; margin: 0; }
-.about-photo > a { display: block; position: relative; border-radius: 12px; overflow: clip; background: var(--chat-sidebar); }
-.about-photo img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
-.about-photo-expand { position: absolute; right: 10px; bottom: 10px; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--chat-rule); border-radius: 7px; background: var(--chat-surface); color: var(--chat-ink); }
-.about-photo-expand svg { width: 16px; height: 16px; }
+.about-mascot { display: grid; place-items: center; aspect-ratio: 1; border-radius: 12px; background: var(--chat-sidebar); }
+.about-mascot .mascot-button { width: 100%; height: auto; aspect-ratio: 1; }
 .about-photo figcaption { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
 .about-photo figcaption strong { font-size: 12px; font-weight: 500; }
 .about-photo figcaption > span { color: var(--chat-muted); font-size: 10px; }
@@ -257,7 +254,8 @@ body { margin: 0; }
   .conversation-main { padding: 12px 24px 28px; }
   .conversation-welcome { max-width: 560px; margin-top: 18px; }
   .conversation-app h1 { font-size: clamp(32px, 6vw, 44px); letter-spacing: -1.2px; }
-  .welcome-avatar { margin-bottom: 20px; }
+  .welcome-avatar { margin-bottom: 8px; }
+  .welcome-avatar .mascot-button { width: 120px; height: 120px; }
   .welcome-description { margin: 18px 0 24px; font-size: 12px; }
   .conversation-composer { padding: 8px 20px max(12px, env(safe-area-inset-bottom)); }
   .conversation-composer textarea { font-size: 16px; }

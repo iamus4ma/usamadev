@@ -26,6 +26,8 @@ test('the in-app 3D model needs no external rewrite', () => {
     { source: '/experiments', destination: '/index.html' },
     { source: '/experiments/:path*', destination: '/index.html' },
   ]);
+  const mascot = registry.find(item => item.slug === 'meet-usama');
+  assert.deepEqual(createConfig([mascot]).rewrites, createConfig([model]).rewrites);
 });
 
 test('root-mounted origins receive both exact and nested routes ahead of SPA fallback', () => {

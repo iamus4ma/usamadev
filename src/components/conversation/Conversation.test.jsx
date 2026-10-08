@@ -13,6 +13,14 @@ function setReducedMotion(reduced) {
 
 beforeEach(() => { localStorage.clear(); setReducedMotion(true); });
 
+test('shows the cursor-following mascot without click reactions in the welcome avatar', () => {
+  render(<Conversation />);
+  const avatar = document.querySelector('.welcome-avatar');
+  expect(avatar.querySelector('.welcome-mascot')).toHaveAttribute('aria-hidden', 'true');
+  expect(avatar.querySelectorAll('.mascot-sprite')).toHaveLength(1);
+  expect(within(avatar).queryByRole('button')).not.toBeInTheDocument();
+});
+
 test.each(topics)('recognizes the prepared $id prompt', topic => {
   expect(matchTopic(topic.prompt)).toBe(topic.id);
 });

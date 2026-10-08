@@ -1,0 +1,4 @@
+.mascot-button { position: relative; display: block; width: 180px; height: 180px; padding: 0; border: 0; background: transparent; appearance: none; cursor: pointer; user-select: none; }
+.mascot-button:focus-visible { outline: 2px solid var(--chat-accent); outline-offset: 3px; border-radius: 12px; }
+.mascot-squash { position: relative; display: block; width: 100%; height: 100%; transform-origin: 50% 78%; }
+.mascot-sprite { position: absolute; inset: 0; background-size: 300% 300%; background-repeat: no-repeat; }

@@ -75,6 +75,7 @@ export function matchTopic(input) {
   if (exact) return exact.id;
   const rules = [
     ['tour', /\b(tour|walkthrough|guide me|show me around)\b/],
+    ['experiment:meet-usama', /\b(meet usama|mascot)\b/],
     ['experiments', /\b(experiments?|prototypes?|pixel pong|animated developer|linkedin companion)\b/],
     ['resume', /\b(resume|résumé|cv|download)\b/],
     ['certifications', /\b(certifications?|certificates?|credentials?|courses?)\b/],

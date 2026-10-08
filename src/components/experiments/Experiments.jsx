@@ -3,6 +3,7 @@ import experiments from './registry.json';
 import './Experiments.css';
 
 const DeveloperExperiment = React.lazy(() => import('./DeveloperExperiment'));
+const MascotExperiment = React.lazy(() => import('./MascotExperiment'));
 
 function ExperimentCatalog({ onSelect }) {
   return <div className="experiments-reply">
@@ -28,7 +29,9 @@ function ExperimentContent({ experiment }) {
         <div className="experiment-actions"><a className="conversation-link" href={`/experiments/${experiment.slug}/fullscreen`}>Open full page ↗</a><a className="conversation-link" href={experiment.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
       </div>;
     case 'inline':
-      return <Suspense fallback={<p>Loading 3D model…</p>}><DeveloperExperiment /></Suspense>;
+      return <Suspense fallback={<p>Loading experiment…</p>}>
+        {experiment.slug === 'meet-usama' ? <MascotExperiment /> : <DeveloperExperiment />}
+      </Suspense>;
     case 'local':
       return <>
         <p className="experiment-status">Local project · no live demo</p>
@@ -43,8 +46,8 @@ function ExperimentContent({ experiment }) {
 
 function ExperimentDetail({ experiment, onSelect }) {
   return <div className="experiments-reply">
-    <h2>{experiment?.name || 'Experiment not found'}</h2>
-    {experiment ? <><p>{experiment.description}</p><ExperimentContent experiment={experiment} /></> : <p>There is no experiment at this address.</p>}
+    {experiment?.slug !== 'meet-usama' && <h2>{experiment?.name || 'Experiment not found'}</h2>}
+    {experiment ? <>{experiment.slug !== 'meet-usama' && <p>{experiment.description}</p>}<ExperimentContent experiment={experiment} /></> : <p>There is no experiment at this address.</p>}
     <button className="experiments-back" type="button" onClick={() => onSelect(null)}>Explore all experiments ↗</button>
   </div>;
 }
