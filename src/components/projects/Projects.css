@@ -9,6 +9,8 @@
     border-radius: 1rem;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
 }
 
 .projects__card:hover {
@@ -20,9 +22,6 @@
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-}
-
-.projects__image {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,11 +109,6 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.projects__card {
-    animation: fadeInUp 0.6s ease forwards;
-    opacity: 0;
 }
 
 .projects__card:nth-child(1) { animation-delay: 0.1s; }

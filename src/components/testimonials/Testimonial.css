@@ -8,6 +8,7 @@
     padding: 1.5rem 2rem;
     border-radius: 1.5rem;
     margin-bottom: var(--mb-3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .testimonial__img {
@@ -24,10 +25,6 @@
 
 .testimonial__description {
     font-size: var(--small-font-size);
-}
-
-.testimonial__card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .testimonial__card:hover {

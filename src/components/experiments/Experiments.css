@@ -39,7 +39,7 @@
 .developer-experiment { display: grid; gap: 16px; }
 .developer-stage { position: relative; height: clamp(360px, 63vh, 620px); overflow: hidden; border: 1px solid var(--chat-rule); border-radius: 12px; background: radial-gradient(circle at 50% 40%, var(--chat-soft), var(--chat-sidebar)); }
 .developer-stage::before { content: ''; position: absolute; width: min(38%, 190px); height: 32px; left: 50%; bottom: 7%; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(ellipse, #00000026, transparent 70%); pointer-events: none; }
-.developer-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.developer-controls { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
 .developer-controls button { padding: 8px 14px; border: 1px solid var(--chat-rule); border-radius: 7px; background: var(--chat-surface); cursor: pointer; }
 .developer-controls button:hover, .developer-controls button.is-active { border-color: var(--chat-accent); color: var(--chat-accent); }
 .developer-controls button:focus-visible { outline: 2px solid var(--chat-accent); outline-offset: 2px; }

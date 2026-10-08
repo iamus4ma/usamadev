@@ -81,10 +81,13 @@ export function matchTopic(input) {
     ['contact', /\b(contact|email|phone|call|number|reach|hire|hiring|touch|linkedin|github|available|availability)\b/],
     ['testimonials', /\b(testimonials?|reviews?|clients?|recommendations?)\b/],
     ['experience', /\b(experience|career|education|study|studied|degree|university|qualification|bellmedex|simplexmed|journey)\b/],
-    ['skills', /\b(skills?|stack|technolog\w*|tools?|react|native|expo|typescript|javascript|node|python|redux|tailwind|aws|docker|devops|redis|graphql|ai|llms?|agents?|learning|explor\w*|system design|work with|works with)\b/],
+    ['skills', /\b(skills?|stack|technolog\w*|tools?|react|native|expo|typescript|javascript)\b/],
+    ['skills', /\b(node|python|redux|tailwind|work with|works with)\b/],
+    ['skills', /\b(aws|docker|devops|redis|graphql|ai|llms?|agents?|learning|explor\w*|system design)\b/],
     ['projects', /\b(projects?|portfolio|built|building|apps?|websites?|work|chat app|estate|fashion)\b/],
     ['services', /\b(services?|help|build|design|offer)\b/],
     ['about', /\b(about|who|where|based|location|faisalabad|pakistan|introduc\w*|hello|hi|hey|usama)\b/],
   ];
-  return rules.find(([, pattern]) => pattern.test(text))?.[0] || 'fallback';
+  const match = rules.find(([, pattern]) => pattern.test(text));
+  return match ? match[0] : 'fallback';
 }

@@ -28,9 +28,9 @@ const Projects = () => {
                   <span className="projects__period">{period}</span>
                   <p className="projects__description">{description}</p>
                   <div className="projects__technologies">
-                    {technologies.map((tech, index) => {
+                    {technologies.map((tech) => {
                       return (
-                        <span className="projects__badge" key={index}>
+                        <span className="projects__badge" key={tech}>
                           {tech}
                         </span>
                       );

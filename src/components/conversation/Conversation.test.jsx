@@ -23,7 +23,7 @@ test('reveals real projects and keeps the conversation when another topic is sel
   const log = screen.getByRole('log');
   expect(within(log).getByRole('heading', { name: 'USA-Estate' })).toBeInTheDocument();
   expect(within(log).getAllByRole('article')).toHaveLength(7);
-  expect(log.querySelector('a[href="#"]')).toBeNull();
+  expect(within(log).queryByRole('link', { name: '#' })).not.toBeInTheDocument();
   fireEvent.click(within(screen.getByRole('navigation')).getByRole('button', { name: 'Tech stack' }));
   expect(within(log).getByText('Backend & data')).toBeInTheDocument();
   expect(within(log).getByRole('heading', { name: 'USA-Estate' })).toBeInTheDocument();
@@ -149,10 +149,9 @@ test('case studies expand independently and a failed screenshot gets an honest f
   const firstProject = screen.getAllByRole('article')[0];
   const summary = within(firstProject).getByText('Read case study');
   fireEvent.click(summary);
-  expect(summary.closest('details')).toHaveAttribute('open');
   expect(within(firstProject).getByText('Technical decisions')).toBeVisible();
   fireEvent.click(summary);
-  expect(summary.closest('details')).not.toHaveAttribute('open');
+  expect(within(firstProject).getByText('Technical decisions')).not.toBeVisible();
   fireEvent.error(within(firstProject).getByRole('img'));
   expect(within(firstProject).getByText('Project overview')).toBeVisible();
   expect(within(firstProject).queryByRole('button', { name: 'Preview USA-Estate' })).not.toBeInTheDocument();

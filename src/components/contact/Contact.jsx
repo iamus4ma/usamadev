@@ -124,7 +124,7 @@ const Contact = () => {
                 required
               ></textarea>
             </div>
-            <button className="button button--flex" disabled={isSubmitting}>
+            <button type="submit" className="button button--flex" disabled={isSubmitting}>
               {isSubmitting ? "Sending..." : "Send Message"}
               <svg
                 className="button__icon"

@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import projects from '../projects/Data';
 import { featuredProjectIds, projectStories } from './projectStories';
 import './ProjectGallery.css';
@@ -41,15 +41,24 @@ export default function ProjectGallery({ featured = false }) {
     if (preview) dialogRef.current?.showModal();
   }, [preview]);
 
-  function closePreview() {
+  const closePreview = useCallback(() => {
     dialogRef.current?.close();
     setPreview(null);
     openerRef.current?.focus({ preventScroll: true });
-  }
+  }, []);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    function closeOnBackdrop(event) {
+      if (event.target === dialog) closePreview();
+    }
+    dialog.addEventListener('click', closeOnBackdrop);
+    return () => dialog.removeEventListener('click', closeOnBackdrop);
+  }, [closePreview]);
 
   return <div className="project-gallery">
     <div className="project-gallery-list">{selected.map(project => <ProjectCard key={project.id} project={project} onPreview={(item, opener) => { openerRef.current = opener; setPreview(item); }} />)}</div>
-    <dialog ref={dialogRef} className="project-preview-dialog" aria-labelledby={titleId} onCancel={event => { event.preventDefault(); closePreview(); }} onClick={event => { if (event.target === event.currentTarget) closePreview(); }}>
+    <dialog ref={dialogRef} className="project-preview-dialog" aria-labelledby={titleId} onCancel={event => { event.preventDefault(); closePreview(); }}>
       {preview && <div className="project-preview-dialog-body"><header><div><h2 id={titleId}>{preview.title}</h2><p>{projectStories[preview.id].imageLabel}</p></div><button autoFocus onClick={closePreview} aria-label="Close project preview">×</button></header><img src={projectStories[preview.id].image} alt={`${preview.title}: ${projectStories[preview.id].imageLabel}`} width="1280" height="800" /><a href={preview.demo} target="_blank" rel="noopener noreferrer">Open live project <span aria-hidden="true">↗</span></a></div>}
     </dialog>
   </div>;

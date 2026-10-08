@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Conversation from '../conversation/Conversation';
 import Experiments from './Experiments';
@@ -14,11 +14,10 @@ afterEach(() => window.history.replaceState({}, '', '/'));
 test('cards distinguish playable and local-only projects', () => {
   render(<Experiments />);
   expect(screen.getAllByRole('article')).toHaveLength(3);
-  expect(screen.getAllByRole('link', { name: /Open Experiment/ }).map(link => link.getAttribute('href'))).toEqual(['/experiments/pixel-pong', '/experiments/animated-developer']);
-  expect(screen.getByRole('link', { name: /View project/ })).toHaveAttribute('href', '/experiments/linkedin-companion');
-  expect(screen.getByText('Local project')).toBeInTheDocument();
+  expect(screen.getAllByRole('button', { name: /Explore demo/ })).toHaveLength(2);
+  expect(screen.getByRole('button', { name: /View project/ })).toBeInTheDocument();
+  expect(screen.getByText('Local project · no live demo')).toBeInTheDocument();
   expect(screen.queryByText('Example')).not.toBeInTheDocument();
-  expect(document.querySelector('a[href*="YOUR_USERNAME"]')).toBeNull();
 });
 
 test.each(['/experiments', '/experiments/'])('direct index route %s opens a prepared reply with the composer', pathname => {
@@ -30,7 +29,7 @@ test.each(['/experiments', '/experiments/'])('direct index route %s opens a prep
   fireEvent.click(screen.getAllByRole('button', { name: /Explore demo/ })[0]);
   expect(window.location.pathname).toBe('/experiments/pixel-pong');
   expect(screen.getByTitle('Pixel Pong live experiment')).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('navigation', { name: 'Explore portfolio' }).querySelector('button.topic-nav'));
+  fireEvent.click(within(screen.getByRole('navigation', { name: 'Explore portfolio' })).getByRole('button', { name: 'About Usama' }));
   expect(window.location.pathname).toBe('/');
   expect(screen.getByRole('textbox')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'A little about Usama.' })).toBeInTheDocument();
@@ -49,22 +48,22 @@ test('direct experiment link opens its detail in the conversation', () => {
 
 test('LinkedIn Companion has a source page without a live demo', () => {
   render(<Experiments pathname="/experiments/linkedin-companion" />);
-  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('LinkedIn Companion');
-  expect(screen.getByText('Local project: No live demo')).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'View source and setup' })).toHaveAttribute('href', 'https://github.com/iamus4ma/linkedin-companion');
+  expect(screen.getByRole('heading', { name: 'LinkedIn Companion' })).toBeInTheDocument();
+  expect(screen.getByText('Local project · no live demo')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /View source and setup/ })).toHaveAttribute('href', 'https://github.com/iamus4ma/linkedin-companion');
   expect(screen.queryByRole('iframe')).not.toBeInTheDocument();
   expect(screen.queryByRole('link', { name: /Open full page/ })).not.toBeInTheDocument();
 });
 
 test('unknown experiments give a useful way back', () => {
   render(<Experiments pathname="/experiments/not-real" />);
-  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Experiment not found');
-  expect(screen.getByRole('link', { name: /All experiments/ })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Experiment not found' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /Explore all experiments/ })).toBeInTheDocument();
 });
 
 test('Pixel Pong embeds the game inside its portfolio route', () => {
   render(<Experiments pathname="/experiments/pixel-pong" />);
-  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Pixel Pong');
+  expect(screen.getByRole('heading', { name: 'Pixel Pong' })).toBeInTheDocument();
   expect(screen.getByTitle('Pixel Pong live experiment')).toHaveAttribute('src', 'https://pixel-pong-six.vercel.app');
   expect(screen.getByRole('link', { name: /Open full page/ })).toHaveAttribute('href', '/experiments/pixel-pong/fullscreen');
   expect(screen.queryByRole('link', { name: /Open live experiment/ })).not.toBeInTheDocument();

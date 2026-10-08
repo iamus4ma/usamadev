@@ -24,6 +24,9 @@
 }
 
 .services__button {
+    border: 0;
+    background: none;
+    padding: 0;
     color: var(--title-color);
     font-size: var(--small-font-size);
     display: inline-flex;
@@ -128,7 +131,7 @@ font-size: var(--small-font-size);
     }
     
   }
-  
+
   /* For medium devices */
   @media screen and (max-width: 768px) {
   
@@ -165,4 +168,3 @@ font-size: var(--small-font-size);
     }
 
   }
-  

@@ -6,7 +6,7 @@ import experiments from './components/experiments/registry.json';
 import { Helmet } from 'react-helmet';
 
 function App() {
-  const standaloneSlug = window.location.pathname.match(/^\/experiments\/([a-z0-9-]+)\/fullscreen\/?$/)?.[1];
+  const standaloneSlug = /^\/experiments\/([a-z0-9-]+)\/fullscreen\/?$/.exec(window.location.pathname)?.[1];
   const standaloneExperiment = experiments.find(experiment => experiment.slug === standaloneSlug && ['pending', 'ready'].includes(experiment.status));
 
   return (

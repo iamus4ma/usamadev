@@ -21,6 +21,13 @@ export function ResponseText({ as: Tag = 'p', children }) {
   )}</Tag>;
 }
 
+function revealTargets(element) {
+  if (element.matches('.project-gallery')) return [...element.querySelectorAll('.project-story')];
+  if (element.matches('.about-profile')) return [...element.querySelectorAll('.about-photo, .reply-note')];
+  if (element.matches('.conversation-projects, .conversation-quotes, .conversation-timeline, .skill-groups, .conversation-services, .certification-list')) return [...element.children];
+  return [element];
+}
+
 export default function AnimatedResponse({ active, children }) {
   const rootRef = useRef(null);
   const timelineRef = useRef(null);
@@ -35,12 +42,7 @@ export default function AnimatedResponse({ active, children }) {
     const body = root.querySelector('.response-body');
     const typing = root.querySelector('.response-typing');
     const words = body.querySelectorAll(':scope > .response-text .response-word, .about-profile-info > .response-text .response-word');
-    const details = [...body.querySelectorAll(':scope > :not(.response-text)')].flatMap(element =>
-      element.matches('.project-gallery') ? [...element.querySelectorAll('.project-story')] :
-      element.matches('.about-profile') ? [...element.querySelectorAll('.about-photo, .reply-note')] :
-      element.matches('.conversation-projects, .conversation-quotes, .conversation-timeline, .skill-groups, .conversation-services, .certification-list')
-        ? [...element.children] : [element]
-    );
+    const details = [...body.querySelectorAll(':scope > :not(.response-text)')].flatMap(revealTargets);
     let pulse;
     const context = gsap.context(() => {
       const finish = () => {
@@ -72,7 +74,7 @@ export default function AnimatedResponse({ active, children }) {
           const main = root.closest('main');
           const turn = root.closest('.conversation-turn');
           if (!main || !turn) return;
-          const inset = parseFloat(window.getComputedStyle(main).scrollPaddingTop) || 0;
+          const inset = Number.parseFloat(window.getComputedStyle(main).scrollPaddingTop) || 0;
           main.scrollTop += turn.getBoundingClientRect().top - main.getBoundingClientRect().top - inset;
         });
       if (words.length) timeline.to(words, {

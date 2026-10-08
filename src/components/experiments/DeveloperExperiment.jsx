@@ -43,16 +43,16 @@ export default function DeveloperExperiment() {
   return <div className="developer-experiment">
     <div ref={stageRef} className="developer-stage" aria-label="Interactive 3D developer model">
       <Canvas camera={{ position: [0, 3, 10], fov: 40 }} dpr={[1, 1.5]} frameloop={stopped ? 'demand' : 'always'} fallback={<div className="developer-static"><img src={portrait} alt="Usama Hassan" /><p>3D is unavailable on this device.</p></div>}>
-        <ambientLight intensity={7} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <directionalLight position={[10, 10, 10]} intensity={1} />
+        <ambientLight intensity={7} /> {/* NOSONAR: React Three Fiber light props are valid Three.js props. */}
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> {/* NOSONAR: React Three Fiber light props are valid Three.js props. */}
+        <directionalLight position={[10, 10, 10]} intensity={1} /> {/* NOSONAR: React Three Fiber light props are valid Three.js props. */}
         <OrbitControls ref={controlsRef} enableZoom={false} enablePan={false} minPolarAngle={Math.PI / 4} maxPolarAngle={Math.PI / 2} enableDamping />
         <Suspense fallback={<CanvasLoader />}>
           <Developer position-y={-3} scale={3} animationName={selection.name} replayKey={selection.replayKey} playOnce paused={stopped} onAnimationComplete={handleComplete} />
         </Suspense>
       </Canvas>
     </div>
-    <div className="developer-controls" role="group" aria-label="Model animations">
+    <fieldset className="developer-controls" aria-label="Model animations">
       {animations.map(animation => <button
         key={animation.id}
         type="button"
@@ -63,7 +63,7 @@ export default function DeveloperExperiment() {
       <span className="developer-controls-divider" aria-hidden="true" />
       <button type="button" onClick={() => setPaused(value => !value)} aria-pressed={paused}>{paused ? 'Play' : 'Pause'}</button>
       <button type="button" onClick={() => controlsRef.current?.reset()}>Reset view</button>
-    </div>
+    </fieldset>
     <p className="developer-hint" aria-live="polite">{paused ? 'Paused' : active.detail}{selection.name !== 'idle' && !paused ? ' · plays once' : ''}. Drag to rotate the model.</p>
   </div>;
 }

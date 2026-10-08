@@ -20,10 +20,10 @@ const Services = () => {
               Complete <br /> Website
             </h3>
           </div>
-          <span className="services__button" onClick={() => toggleTab(1)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTab(1); } }} role="button" tabIndex={0}>
+          <button type="button" className="services__button" onClick={() => toggleTab(1)}>
             View More
             <i className="uil uil-arrow-right services__button-icon"></i>
-          </span>
+          </button>
 
           <div className={toggleState === 1 ? "services__modal active-modal" : "services__modal"}>
             <div className="services__modal-content">
@@ -81,10 +81,10 @@ const Services = () => {
               Frontend <br /> Development
             </h3>
           </div>
-          <span onClick={() => toggleTab(2)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTab(2); } }} role="button" tabIndex={0} className="services__button">
+          <button type="button" onClick={() => toggleTab(2)} className="services__button">
             View More
             <i className="uil uil-arrow-right services__button-icon"></i>
-          </span>
+          </button>
 
           <div className={toggleState === 2 ? "services__modal active-modal" : "services__modal"}>
             <div className="services__modal-content">
@@ -140,10 +140,10 @@ const Services = () => {
               UI/UX <br /> Design
             </h3>
           </div>
-          <span onClick={() => toggleTab(3)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTab(3); } }} role="button" tabIndex={0} className="services__button">
+          <button type="button" onClick={() => toggleTab(3)} className="services__button">
             View More
             <i className="uil uil-arrow-right services__button-icon"></i>
-          </span>
+          </button>
 
           <div className={toggleState === 3 ? "services__modal active-modal" : "services__modal"}>
             <div className="services__modal-content">
