@@ -1,4 +1,18 @@
 .experiments-page { width: min(100%, 920px); margin: 0 auto; padding: 24px 28px 64px; }
+.experiments-reply > h2 { margin-bottom: 16px; }
+.experiments-reply > p { font-size: 13px; line-height: 1.85; margin-bottom: 20px; }
+.experiments-reply-list { border-top: 1px solid var(--chat-rule); }
+.experiments-reply-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--chat-rule); }
+.experiments-reply-item > div { min-width: 0; }
+.experiments-reply-item h3 { font-size: 15px; font-weight: 500; margin: 5px 0 8px; }
+.experiments-reply-item p { color: var(--chat-muted); font-size: 12px; line-height: 1.7; margin-bottom: 12px; }
+.experiments-reply-item button, .experiments-back { flex-shrink: 0; font-size: 11px; color: var(--chat-accent); text-align: left; cursor: pointer; }
+.experiments-reply-item button:hover, .experiments-back:hover { text-decoration: underline; text-underline-offset: 4px; }
+.experiments-reply .experiment-player { display: grid; gap: 14px; margin: 24px 0; }
+.experiments-reply .experiment-frame { height: clamp(320px, 48vh, 530px); }
+.experiments-reply .developer-experiment { margin: 24px 0; }
+.experiments-reply .experiment-highlights { margin: 18px 0; font-size: 12px; line-height: 1.7; }
+.experiments-back { display: block; margin-top: 24px; }
 .experiments-page > .conversation-link { font-size: 12px; }
 .experiments-eyebrow { color: var(--chat-muted); font-size: 11px; margin-top: 44px; letter-spacing: .08em; text-transform: uppercase; }
 .experiments-page h1 { font: 400 clamp(30px, 4vw, 44px)/1.2 var(--chat-display); margin: 14px 0 20px; }
@@ -38,5 +52,5 @@
 .experiment-return { position: absolute; top: max(16px, env(safe-area-inset-top)); left: max(16px, env(safe-area-inset-left)); z-index: 1; padding: 9px 13px; border: 1px solid #ffffff55; border-radius: 8px; background: #151515dc; color: #fff; font: 12px/1.5 var(--chat-font, sans-serif); text-decoration: none; }
 .experiment-return:hover { background: #333; }
 .experiment-return:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-@media (max-width: 600px) { .experiments-grid { grid-template-columns: 1fr; } .experiments-page { padding: 20px 4px 40px; } .experiment-card { padding: 20px; } .developer-stage { height: min(52vh, 440px); min-height: 320px; } }
+@media (max-width: 600px) { .experiments-grid { grid-template-columns: 1fr; } .experiments-page { padding: 20px 4px 40px; } .experiment-card { padding: 20px; } .experiments-reply-item { flex-direction: column; gap: 12px; } .developer-stage { height: min(52vh, 440px); min-height: 320px; } }
 @media (prefers-reduced-motion: reduce) { .experiment-open span { transition: none; transform: none !important; } }

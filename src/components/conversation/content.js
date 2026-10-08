@@ -1,6 +1,7 @@
 export const topics = [
   { id: 'about', label: 'About Usama', prompt: 'Tell me about Usama', icon: 'person', hint: 'A quick introduction' },
   { id: 'projects', label: 'Projects', prompt: 'Show me Usama’s projects', icon: 'grid', hint: 'From ideas to working products' },
+  { id: 'experiments', label: 'Experiments', prompt: 'Show me Usama’s experiments', icon: 'lab', hint: 'Interactive ideas and prototypes' },
   { id: 'skills', label: 'Tech stack', prompt: 'What does he work with?', icon: 'code', hint: 'The tools behind the work' },
   { id: 'experience', label: 'Experience', prompt: 'Explore his experience', icon: 'case', hint: 'His journey so far' },
   { id: 'certifications', label: 'Certifications', prompt: 'What certifications does he have?', icon: 'file', hint: 'Learning put into practice' },
@@ -74,6 +75,7 @@ export function matchTopic(input) {
   if (exact) return exact.id;
   const rules = [
     ['tour', /\b(tour|walkthrough|guide me|show me around)\b/],
+    ['experiments', /\b(experiments?|prototypes?|pixel pong|animated developer|linkedin companion)\b/],
     ['resume', /\b(resume|résumé|cv|download)\b/],
     ['certifications', /\b(certifications?|certificates?|credentials?|courses?)\b/],
     ['contact', /\b(contact|email|phone|call|number|reach|hire|hiring|touch|linkedin|github|available|availability)\b/],

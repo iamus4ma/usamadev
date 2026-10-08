@@ -21,19 +21,30 @@ test('cards distinguish playable and local-only projects', () => {
   expect(document.querySelector('a[href*="YOUR_USERNAME"]')).toBeNull();
 });
 
-test.each(['/experiments', '/experiments/'])('direct index route %s uses the existing shell without a composer', pathname => {
+test.each(['/experiments', '/experiments/'])('direct index route %s opens a prepared reply with the composer', pathname => {
   window.history.replaceState({}, '', pathname);
   render(<Conversation />);
-  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Small ideas. Room to play.');
-  expect(screen.getByRole('link', { name: 'Experiments' })).toHaveAttribute('aria-current', 'page');
-  expect(screen.queryByRole('textbox')).toBeNull();
-  fireEvent.click(screen.getByRole('button', { name: 'About Usama' }));
+  expect(screen.getByRole('heading', { name: 'Small ideas. Room to play.' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Experiments' })).toHaveAttribute('aria-current', 'true');
+  expect(screen.getByRole('textbox')).toBeInTheDocument();
+  fireEvent.click(screen.getAllByRole('button', { name: /Explore demo/ })[0]);
+  expect(window.location.pathname).toBe('/experiments/pixel-pong');
+  expect(screen.getByTitle('Pixel Pong live experiment')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('navigation', { name: 'Explore portfolio' }).querySelector('button.topic-nav'));
   expect(window.location.pathname).toBe('/');
   expect(screen.getByRole('textbox')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'A little about Usama.' })).toBeInTheDocument();
   window.history.replaceState({}, '', pathname);
   fireEvent.popState(window);
-  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Small ideas. Room to play.');
+  expect(screen.getByRole('heading', { name: 'Small ideas. Room to play.' })).toBeInTheDocument();
+});
+
+test('direct experiment link opens its detail in the conversation', () => {
+  window.history.replaceState({}, '', '/experiments/linkedin-companion');
+  render(<Conversation />);
+  expect(screen.getByRole('heading', { name: 'LinkedIn Companion' })).toBeInTheDocument();
+  expect(screen.getByText('Local project · no live demo')).toBeInTheDocument();
+  expect(screen.queryByRole('iframe')).toBeNull();
 });
 
 test('LinkedIn Companion has a source page without a live demo', () => {

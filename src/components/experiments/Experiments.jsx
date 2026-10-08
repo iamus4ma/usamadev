@@ -5,10 +5,30 @@ import './Experiments.css';
 
 const DeveloperExperiment = React.lazy(() => import('./DeveloperExperiment'));
 
-export default function Experiments({ pathname = '/experiments' }) {
+export default function Experiments({ pathname = '/experiments', embedded = false, onSelect }) {
   const slug = pathname.replace(/\/$/, '').split('/')[2];
   const selected = experiments.find(experiment => experiment.slug === slug);
   const title = slug ? (selected ? selected.name : 'Experiment not found') : 'Small ideas. Room to play.';
+
+  if (embedded) return <div className="experiments-reply">
+    {!slug ? <>
+      <h2>{title}</h2>
+      <p>A space for curious ideas, focused prototypes, and things I’m learning by building. Pick one to explore.</p>
+      <div className="experiments-reply-list">{experiments.map(experiment => <article key={experiment.slug} className="experiments-reply-item">
+        <div><span className="experiment-status">{experiment.status === 'local' ? 'Local project · no live demo' : 'Interactive demo'}</span><h3>{experiment.name}</h3><p>{experiment.description}</p><ul className="tech-tags" aria-label={`${experiment.name} technologies`}>{experiment.technologies.map(technology => <li key={technology}>{technology}</li>)}</ul></div>
+        <button type="button" onClick={() => onSelect(experiment)}>{experiment.status === 'local' ? 'View project' : 'Explore demo'} <span aria-hidden="true">↗</span></button>
+      </article>)}</div>
+    </> : <>
+      <h2>{title}</h2>
+      {selected ? <>
+        <p>{selected.description}</p>
+        {selected.status === 'pending' && <div className="experiment-player"><iframe className="experiment-frame" src={selected.deploymentUrl} title={`${selected.name} live experiment`} allow="fullscreen" sandbox="allow-scripts allow-same-origin" /><div className="experiment-actions"><a className="conversation-link" href={`/experiments/${selected.slug}/fullscreen`}>Open full page ↗</a><a className="conversation-link" href={selected.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div>}
+        {selected.status === 'inline' && <Suspense fallback={<p>Loading 3D model…</p>}><DeveloperExperiment /></Suspense>}
+        {selected.status === 'local' && <><p className="experiment-status">Local project · no live demo</p><ul className="experiment-highlights">{selected.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul><p>Setup instructions are in the repository.</p><a className="conversation-link" href={selected.githubUrl} target="_blank" rel="noopener noreferrer">View source and setup ↗</a></>}
+      </> : <p>There is no experiment at this address.</p>}
+      <button className="experiments-back" type="button" onClick={() => onSelect(null)}>Explore all experiments ↗</button>
+    </>}
+  </div>;
 
   return <section className="experiments-page" aria-labelledby="experiments-title">
     <Helmet>

@@ -9,6 +9,8 @@ import { gsap } from 'gsap';
 import AnimatedResponse, { ResponseText, useReducedMotion } from './AnimatedResponse';
 import ProjectGallery from './ProjectGallery';
 import Experiments from '../experiments/Experiments';
+import experiments from '../experiments/registry.json';
+import { Helmet } from 'react-helmet';
 
 const paths = {
   plus: 'M12 5v14M5 12h14',
@@ -89,7 +91,8 @@ function Timeline({ items }) {
   return <ol className="conversation-timeline">{items.map(item => <li key={item.place}><div><h4>{item.role}</h4><p>{item.place}</p>{item.location && <p className="timeline-location">{item.location}</p>}{item.description && <p className="timeline-description">{item.description}</p>}{item.highlights && <ul className="timeline-highlights">{item.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul>}</div><span>{item.period}</span></li>)}</ol>;
 }
 
-function Reply({ topic, featured = false }) {
+function Reply({ topic, featured = false, onExperimentSelect }) {
+  if (topic === 'experiments' || topic.startsWith('experiment:')) return <Experiments embedded pathname={topic === 'experiments' ? '/experiments' : `/experiments/${topic.slice(11)}`} onSelect={onExperimentSelect} />;
   switch (topic) {
     case 'about': return <>
       <ResponseText as="h2">A little about Usama.</ResponseText>
@@ -123,17 +126,17 @@ function Reply({ topic, featured = false }) {
 export default function Conversation() {
   const [pathname, setPathname] = useState(() => window.location.pathname);
   const isExperiments = pathname === '/experiments' || pathname.startsWith('/experiments/');
+  const routeMessage = path => {
+    const slug = path.match(/^\/experiments\/([a-z0-9-]+)\/?$/)?.[1];
+    if (slug) return [{ prompt: `Tell me about ${experiments.find(item => item.slug === slug)?.name || 'this experiment'}`, topic: `experiment:${slug}` }];
+    return /^\/experiments\/?$/.test(path) ? [{ prompt: 'Show me Usama’s experiments', topic: 'experiments' }] : [];
+  };
   useEffect(() => {
-    const onPopState = () => setPathname(window.location.pathname);
+    const onPopState = () => { setPathname(window.location.pathname); setMessages(routeMessage(window.location.pathname)); };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
-  function returnToConversation() {
-    if (!isExperiments) return;
-    window.history.pushState({}, '', '/');
-    setPathname('/');
-  }
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => routeMessage(window.location.pathname));
   const [input, setInput] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [tourStep, setTourStep] = useState(null);
@@ -215,8 +218,10 @@ export default function Conversation() {
 
   function ask(prompt, topic = matchTopic(prompt), nextTourStep = null) {
     if (!prompt.trim()) return;
-    returnToConversation();
     if (topic === 'tour') { startTour(); return; }
+    const nextPath = topic === 'experiments' ? '/experiments' : topic.startsWith('experiment:') ? `/experiments/${topic.slice(11)}` : '/';
+    if (window.location.pathname !== nextPath) window.history.pushState({}, '', nextPath);
+    setPathname(nextPath);
     setTourStep(nextTourStep);
     setMessages(previous => [...previous, { prompt: prompt.trim(), topic, tourStep: nextTourStep }]);
     setInput('');
@@ -240,7 +245,8 @@ export default function Conversation() {
   }
 
   function reset() {
-    returnToConversation();
+    if (window.location.pathname !== '/') window.history.pushState({}, '', '/');
+    setPathname('/');
     setTourStep(null);
     setMessages([]);
     setInput('');
@@ -251,6 +257,10 @@ export default function Conversation() {
   function closeMenu() {
     setMenuOpen(false);
     menuButtonRef.current?.focus();
+  }
+
+  function selectExperiment(experiment) {
+    ask(experiment ? `Tell me about ${experiment.name}` : 'Show me Usama’s experiments', experiment ? `experiment:${experiment.slug}` : 'experiments');
   }
 
   function handleNavigationKeys(event) {
@@ -266,21 +276,22 @@ export default function Conversation() {
   }
 
   return <div ref={appRef} className="conversation-app" data-chat-theme={dark ? 'dark' : 'light'} onKeyDown={handleNavigationKeys}>
+    <Helmet><title>{isExperiments ? `${experiments.find(item => pathname.includes(`/${item.slug}`))?.name || 'Experiments'} | Usama Hassan` : 'Usama Hassan | Full Stack Developer'}</title></Helmet>
     <a className="conversation-skip" href="#conversation-main">Skip to conversation</a>
     {menuOpen && <div className="navigation-backdrop" onClick={closeMenu} aria-hidden="true" />}
     <aside ref={sidebarRef} id="portfolio-sidebar" className={`conversation-sidebar ${menuOpen ? 'is-open' : ''}`} role={menuOpen ? 'dialog' : undefined} aria-modal={menuOpen ? 'true' : undefined} aria-label="Portfolio navigation">
       <div className="sidebar-brand"><img className="brand-favicon" src={`${process.env.PUBLIC_URL}/favicon.png`} alt="" width="36" height="36" /><span>usama<span className="brand-muted">Dev</span></span><button className="icon-button mobile-close" onClick={closeMenu} aria-label="Close navigation"><Icon name="close" /></button></div>
       <button className="new-conversation" onClick={reset}><Icon name="plus" />New conversation</button>
       <button className="sidebar-tour" onClick={startTour}><Icon name="spark" />Quick tour<Icon name="external" /></button>
-      <nav aria-label="Explore portfolio"><p className="sidebar-label">Explore</p>{topics.map(topic => <button key={topic.id} className={`topic-nav ${!isExperiments && activeTopic === topic.id ? 'is-active' : ''}`} aria-current={!isExperiments && activeTopic === topic.id ? 'true' : undefined} onClick={() => ask(topic.prompt, topic.id)}><Icon name={topic.icon} /><span>{topic.label}</span>{topic.id === 'projects' && <small>{projects.length}</small>}</button>)}<a className={`topic-nav ${isExperiments ? 'is-active' : ''}`} href="/experiments" aria-current={isExperiments ? 'page' : undefined}><Icon name="lab" /><span>Experiments</span></a></nav>
+      <nav aria-label="Explore portfolio"><p className="sidebar-label">Explore</p>{topics.map(topic => <button key={topic.id} className={`topic-nav ${activeTopic === topic.id || (topic.id === 'experiments' && activeTopic?.startsWith('experiment:')) ? 'is-active' : ''}`} aria-current={activeTopic === topic.id || (topic.id === 'experiments' && activeTopic?.startsWith('experiment:')) ? 'true' : undefined} onClick={() => ask(topic.prompt, topic.id)}><Icon name={topic.icon} /><span>{topic.label}</span>{topic.id === 'projects' && <small>{projects.length}</small>}</button>)}</nav>
       <div className="sidebar-bottom"><div className="sidebar-socials"><ExternalLink href="https://github.com/iamus4ma">GitHub</ExternalLink><ExternalLink href="https://www.linkedin.com/in/iamus4ma/">LinkedIn</ExternalLink></div><div className="sidebar-profile"><img src={portrait} alt="Usama Hassan" width="38" height="38" /><div><strong>Usama Hassan</strong><span>Full Stack Developer</span></div><button className="icon-button" onClick={() => setDark(value => !value)} aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}><Icon name={dark ? 'sun' : 'moon'} /></button></div></div>
     </aside>
     <div className="conversation-workspace">
       <header className="conversation-header"><div><button ref={menuButtonRef} className="icon-button mobile-menu" aria-expanded={menuOpen} aria-controls="portfolio-sidebar" aria-label="Toggle navigation" onClick={() => setMenuOpen(value => !value)}><Icon name="menu" /></button><span>Usama’s portfolio <span className="header-divider">/</span> <span className="header-muted">{isExperiments ? 'Experiments' : 'A conversation'}</span></span></div><a href="mailto:usama.0.vip@gmail.com">Let’s talk<Icon name="external" /></a></header>
       <main ref={mainRef} id="conversation-main" className={`conversation-main ${messages.length || isExperiments ? 'has-messages' : ''}`} tabIndex="-1">
-        {isExperiments ? <Experiments pathname={pathname} /> : !messages.length ? <section className="conversation-welcome"><div className="welcome-avatar"><img src={portrait} alt="" width="64" height="64" /><span><Icon name="code" /></span></div><p className="welcome-intro">A different way to get to know me.</p><h1>Hi, I’m Usama.<br /><span>What would you like to explore?</span></h1><p className="welcome-description">Full stack developer. Thoughtful interfaces.<br className="desktop-break" /> Web and mobile, from interface to API.</p><button className="tour-invitation" onClick={startTour}><Icon name="spark" /><span>Take a quick tour</span><small>4 stops</small><Icon name="external" /></button><div className="suggested-prompts">{['projects', 'skills', 'about', 'contact'].map(id => { const topic = topics.find(item => item.id === id); return <button key={id} onClick={() => ask(topic.prompt, id)}><Icon name={topic.icon} /><strong>{topic.prompt}</strong><span>{topic.hint}</span><Icon name="external" className="prompt-arrow" /></button>; })}</div></section> : <div className="conversation-thread" role="log" aria-label="Portfolio conversation" aria-live="polite" aria-relevant="additions">{messages.map((message, index) => <section className="conversation-turn" key={index} ref={index === messages.length - 1 ? latestRef : null}><div className="visitor-message"><span className="sr-only">You asked: </span>{message.prompt}</div><div className="portfolio-message"><div className="reply-author"><span className="reply-monogram">u.</span><strong>Usama’s portfolio</strong><span>Prepared response</span></div><AnimatedResponse active={index === messages.length - 1}><Reply topic={message.topic} featured={message.tourStep === 1} /></AnimatedResponse></div></section>)}<div className="follow-up-prompts" aria-label="Explore next">{topics.filter(topic => topic.id !== activeTopic).slice(0, 4).map(topic => <button key={topic.id} onClick={() => ask(topic.prompt, topic.id)}>{topic.label}<Icon name="external" /></button>)}</div></div>}
+        {!messages.length ? <section className="conversation-welcome"><div className="welcome-avatar"><img src={portrait} alt="" width="64" height="64" /><span><Icon name="code" /></span></div><p className="welcome-intro">A different way to get to know me.</p><h1>Hi, I’m Usama.<br /><span>What would you like to explore?</span></h1><p className="welcome-description">Full stack developer. Thoughtful interfaces.<br className="desktop-break" /> Web and mobile, from interface to API.</p><button className="tour-invitation" onClick={startTour}><Icon name="spark" /><span>Take a quick tour</span><small>4 stops</small><Icon name="external" /></button><div className="suggested-prompts">{['projects', 'skills', 'about', 'contact'].map(id => { const topic = topics.find(item => item.id === id); return <button key={id} onClick={() => ask(topic.prompt, id)}><Icon name={topic.icon} /><strong>{topic.prompt}</strong><span>{topic.hint}</span><Icon name="external" className="prompt-arrow" /></button>; })}</div></section> : <div className="conversation-thread" role="log" aria-label="Portfolio conversation" aria-live="polite" aria-relevant="additions">{messages.map((message, index) => <section className="conversation-turn" key={index} ref={index === messages.length - 1 ? latestRef : null}><div className="visitor-message"><span className="sr-only">You asked: </span>{message.prompt}</div><div className="portfolio-message"><div className="reply-author"><span className="reply-monogram">u.</span><strong>Usama’s portfolio</strong><span>Prepared response</span></div><AnimatedResponse active={index === messages.length - 1}><Reply topic={message.topic} featured={message.tourStep === 1} onExperimentSelect={selectExperiment} /></AnimatedResponse></div></section>)}<div className="follow-up-prompts" aria-label="Explore next">{topics.filter(topic => topic.id !== activeTopic).slice(0, 4).map(topic => <button key={topic.id} onClick={() => ask(topic.prompt, topic.id)}>{topic.label}<Icon name="external" /></button>)}</div></div>}
       </main>
-      {!isExperiments && <footer className={`conversation-composer ${showAffordance ? 'composer-afford' : ''}`}>{tourStep !== null && <section className="tour-controls" aria-label="Guided tour"><div className="tour-progress"><span aria-live="polite">{tourStep + 1} / {tourSteps.length} <strong>{tourSteps[tourStep].label}</strong></span><div className="tour-progress-track" aria-hidden="true">{tourSteps.map((step, index) => <i key={step.topic} className={index <= tourStep ? 'is-complete' : ''} />)}</div></div><div className="tour-actions"><button onClick={endTour}>Skip tour</button><button ref={tourNextRef} className="tour-next" onClick={nextTourStop}>{tourStep === tourSteps.length - 1 ? 'Finish tour' : 'Next'}<Icon name="external" /></button></div></section>}<form onSubmit={event => { event.preventDefault(); ask(input); }}><label className="sr-only" htmlFor="portfolio-question">Ask about Usama’s portfolio</label><textarea id="portfolio-question" ref={inputRef} rows="2" maxLength="500" value={input} onChange={event => setInput(event.target.value)} placeholder="Ask about my work, skills, or experience…" onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); ask(input); } }} /><div className="composer-bottom"><span><Icon name="chat" />A little curiosity goes a long way.</span><button type="submit" className="send-question" disabled={!input.trim()} aria-label="Send question"><Icon name="arrow" /></button></div></form><p>Prepared by Usama. No AI, just a more personal portfolio.</p></footer>}
+      <footer className={`conversation-composer ${showAffordance ? 'composer-afford' : ''}`}>{tourStep !== null && <section className="tour-controls" aria-label="Guided tour"><div className="tour-progress"><span aria-live="polite">{tourStep + 1} / {tourSteps.length} <strong>{tourSteps[tourStep].label}</strong></span><div className="tour-progress-track" aria-hidden="true">{tourSteps.map((step, index) => <i key={step.topic} className={index <= tourStep ? 'is-complete' : ''} />)}</div></div><div className="tour-actions"><button onClick={endTour}>Skip tour</button><button ref={tourNextRef} className="tour-next" onClick={nextTourStop}>{tourStep === tourSteps.length - 1 ? 'Finish tour' : 'Next'}<Icon name="external" /></button></div></section>}<form onSubmit={event => { event.preventDefault(); ask(input); }}><label className="sr-only" htmlFor="portfolio-question">Ask about Usama’s portfolio</label><textarea id="portfolio-question" ref={inputRef} rows="2" maxLength="500" value={input} onChange={event => setInput(event.target.value)} placeholder="Ask about my work, skills, or experience…" onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); ask(input); } }} /><div className="composer-bottom"><span><Icon name="chat" />A little curiosity goes a long way.</span><button type="submit" className="send-question" disabled={!input.trim()} aria-label="Send question"><Icon name="arrow" /></button></div></form><p>Prepared by Usama. No AI, just a more personal portfolio.</p></footer>
     </div>
   </div>;
 }
