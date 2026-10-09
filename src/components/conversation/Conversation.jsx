@@ -107,7 +107,7 @@ function Reply({ topic, featured = false, onExperimentSelect }) {
           <figcaption><strong>Usama Hassan</strong><span>Full Stack Developer</span><span className="about-mascot-hint">Tap to say hello.</span></figcaption>
         </figure>
         <div className="about-profile-info">
-          <ResponseText>I’m Usama Hassan, a software engineer and full stack developer based in Faisalabad, Pakistan. I build scalable web and mobile applications with React, React Native, Expo, and the MERN stack.</ResponseText>
+          <ResponseText>I’m Usama Hassan, a software engineer and full stack developer based in Pakistan. I build scalable web and mobile applications with React, React Native, Expo, and the MERN stack.</ResponseText>
           <ResponseText>My experience spans healthcare products, admin dashboards, e-commerce platforms, and business management systems. I focus on performance, reusable architecture, and clean, maintainable code.</ResponseText>
           <ResponseText>I also share what I learn through technical articles and LinkedIn posts, while exploring cloud architecture, system design, AI, and LLMs.</ResponseText><div className="reply-note"><Icon name="code" /><span>Web and mobile. Full stack thinking.</span></div>
         </div>

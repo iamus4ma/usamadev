@@ -79,6 +79,7 @@ test('Pixel Pong embeds the game inside its portfolio route', () => {
   render(<Experiments pathname="/experiments/pixel-pong" />);
   expect(screen.getByRole('heading', { name: 'Pixel Pong' })).toBeInTheDocument();
   expect(screen.getByTitle('Pixel Pong live experiment')).toHaveAttribute('src', 'https://pixel-pong-six.vercel.app');
+  expect(screen.getByTitle('Pixel Pong live experiment')).toHaveAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
   expect(screen.getByRole('link', { name: /Open full page/ })).toHaveAttribute('href', '/experiments/pixel-pong/fullscreen');
   expect(screen.queryByRole('link', { name: /Open live experiment/ })).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: /GitHub/ })).toHaveAttribute('href', 'https://github.com/iamus4ma/pixel-pong-game');
@@ -88,6 +89,7 @@ test('full-page route keeps the game on the portfolio domain without the portfol
   window.history.replaceState({}, '', '/experiments/pixel-pong/fullscreen');
   render(<App />);
   expect(screen.getByTitle('Pixel Pong live experiment')).toHaveAttribute('src', 'https://pixel-pong-six.vercel.app');
+  expect(screen.getByTitle('Pixel Pong live experiment')).toHaveAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
   expect(screen.queryByRole('navigation', { name: 'Explore portfolio' })).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Back to Pixel Pong in the portfolio' })).toHaveAttribute('href', '/experiments/pixel-pong');
 });

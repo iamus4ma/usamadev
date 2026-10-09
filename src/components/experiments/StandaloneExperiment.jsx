@@ -13,7 +13,7 @@ export default function StandaloneExperiment({ experiment }) {
       src={experiment.deploymentUrl}
       title={`${experiment.name} live experiment`}
       allow="fullscreen"
-      sandbox="allow-scripts allow-same-origin"
+      sandbox="allow-scripts allow-same-origin allow-forms"
     />
     <a className="experiment-return" href={`/experiments/${experiment.slug}`} aria-label={`Back to ${experiment.name} in the portfolio`}>← Back to portfolio</a>
   </main>;
