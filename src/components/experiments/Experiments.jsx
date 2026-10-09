@@ -4,7 +4,6 @@ import './Experiments.css';
 
 const DeveloperExperiment = React.lazy(() => import('./DeveloperExperiment'));
 const MascotExperiment = React.lazy(() => import('./MascotExperiment'));
-
 function ExperimentCatalog({ onSelect }) {
   return <div className="experiments-reply">
     <h2>Small ideas. Room to play.</h2>
@@ -26,7 +25,7 @@ function ExperimentContent({ experiment }) {
     case 'pending':
       return <div className="experiment-player">
         <iframe className="experiment-frame" src={experiment.deploymentUrl} title={`${experiment.name} live experiment`} allow="fullscreen" sandbox="allow-scripts allow-same-origin allow-forms" />
-        <div className="experiment-actions"><a className="conversation-link" href={`/experiments/${experiment.slug}/fullscreen`}>Open full page ↗</a><a className="conversation-link" href={experiment.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+        <div className="experiment-actions"><a className="conversation-link" href={`/experiments/${experiment.slug}/fullscreen`}>Open full page ↗</a>{experiment.sourceUnavailable ? <span className="experiment-source-pending">Source unavailable</span> : <a className="conversation-link" href={experiment.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}</div>
       </div>;
     case 'inline':
       return <Suspense fallback={<p>Loading experiment…</p>}>

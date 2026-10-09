@@ -76,6 +76,7 @@ export function matchTopic(input) {
   const rules = [
     ['tour', /\b(tour|walkthrough|guide me|show me around)\b/],
     ['experiment:meet-usama', /\b(meet usama|mascot)\b/],
+    ['experiment:udev-technologies', /\b(udev technologies|technology agency concept)\b/],
     ['experiments', /\b(experiments?|prototypes?|pixel pong|animated developer|linkedin companion)\b/],
     ['resume', /\b(resume|résumé|cv|download)\b/],
     ['certifications', /\b(certifications?|certificates?|credentials?|courses?)\b/],
@@ -85,7 +86,7 @@ export function matchTopic(input) {
     ['skills', /\b(skills?|stack|technolog\w*|tools?|react|native|expo|typescript|javascript)\b/],
     ['skills', /\b(node|python|redux|tailwind|work with|works with)\b/],
     ['skills', /\b(aws|docker|devops|redis|graphql|ai|llms?|agents?|learning|explor\w*|system design)\b/],
-    ['projects', /\b(projects?|portfolio|built|building|apps?|websites?|work|chat app|estate|fashion)\b/],
+    ['projects', /\b(projects?|portfolio|built|building|apps?|websites?|work|chat app|estate|fashion|eastwinners|east winners)\b/],
     ['services', /\b(services?|help|build|design|offer)\b/],
     ['about', /\b(about|who|where|based|location|faisalabad|pakistan|introduc\w*|hello|hi|hey|usama)\b/],
   ];

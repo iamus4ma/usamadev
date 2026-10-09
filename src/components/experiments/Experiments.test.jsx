@@ -15,11 +15,12 @@ afterEach(() => window.history.replaceState({}, '', '/'));
 
 test('cards distinguish playable and local-only projects', () => {
   render(<Experiments />);
-  expect(screen.getAllByRole('article')).toHaveLength(4);
-  expect(screen.getAllByRole('button', { name: /Explore demo/ })).toHaveLength(3);
+  expect(screen.getAllByRole('article')).toHaveLength(5);
+  expect(screen.getAllByRole('button', { name: /Explore demo/ })).toHaveLength(4);
   expect(screen.getByRole('button', { name: /View project/ })).toBeInTheDocument();
   expect(screen.getByText('Local project · no live demo')).toBeInTheDocument();
   expect(screen.queryByText('Example')).not.toBeInTheDocument();
+  expect(screen.queryByText('Eastwinners Business Portfolio')).not.toBeInTheDocument();
 });
 
 test.each(['/experiments', '/experiments/'])('direct index route %s opens a prepared reply with the composer', pathname => {
@@ -92,4 +93,14 @@ test('full-page route keeps the game on the portfolio domain without the portfol
   expect(screen.getByTitle('Pixel Pong live experiment')).toHaveAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
   expect(screen.queryByRole('navigation', { name: 'Explore portfolio' })).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Back to Pixel Pong in the portfolio' })).toHaveAttribute('href', '/experiments/pixel-pong');
+});
+
+test('UDev Technologies concept has an embedded demo without a broken source link', () => {
+  expect(matchTopic('Show me UDev Technologies')).toBe('experiment:udev-technologies');
+  render(<Experiments pathname="/experiments/udev-technologies" />);
+  expect(screen.getByRole('heading', { name: 'UDev Technologies Concept' })).toBeInTheDocument();
+  expect(screen.getByTitle('UDev Technologies Concept live experiment')).toHaveAttribute('src', 'https://udev-technologies.vercel.app');
+  expect(screen.getByRole('link', { name: /Open full page/ })).toHaveAttribute('href', '/experiments/udev-technologies/fullscreen');
+  expect(screen.getByText('Source unavailable')).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: /GitHub/ })).not.toBeInTheDocument();
 });

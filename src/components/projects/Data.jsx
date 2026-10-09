@@ -83,6 +83,18 @@ const Projects = [
     github: "#",
     demo: "https://usa-estate.onrender.com/",
   },
+  {
+    id: 8,
+    color: ["#257b54", "#42b86b"],
+    icon: "uil uil-building",
+    title: "Eastwinners Business Portfolio",
+    period: "2025",
+    description:
+      "A responsive business website presenting Eastwinners' trading, after-sale, and warehousing services with dedicated service pages and contact details.",
+    technologies: ["React", "TypeScript", "Vite", "Tailwind CSS"],
+    github: "https://github.com/iamus4ma/business-portfolio",
+    demo: "https://business-portfolio-demo.vercel.app/",
+  },
 ];
 
 export default Projects;

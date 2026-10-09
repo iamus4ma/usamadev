@@ -51,12 +51,19 @@ test.each(topics)('recognizes the prepared $id prompt', topic => {
   expect(matchTopic(topic.prompt)).toBe(topic.id);
 });
 
+test('finds Eastwinners in projects', () => {
+  expect(matchTopic('Show me Eastwinners')).toBe('projects');
+});
+
 test('reveals real projects and keeps the conversation when another topic is selected', () => {
   render(<Conversation />);
   fireEvent.click(screen.getByRole('button', { name: /Show me Usama’s projects/ }));
   const log = screen.getByRole('log');
   expect(within(log).getByRole('heading', { name: 'USA-Estate' })).toBeInTheDocument();
-  expect(within(log).getAllByRole('article')).toHaveLength(7);
+  expect(within(log).getAllByRole('article')).toHaveLength(8);
+  const eastwinners = within(log).getByRole('heading', { name: 'Eastwinners Business Portfolio' }).closest('article');
+  expect(within(eastwinners).getByRole('link', { name: /Open live project/ })).toHaveAttribute('href', 'https://business-portfolio-demo.vercel.app/');
+  expect(within(eastwinners).getByRole('link', { name: /Source code/ })).toHaveAttribute('href', 'https://github.com/iamus4ma/business-portfolio');
   expect(within(log).queryByRole('link', { name: '#' })).not.toBeInTheDocument();
   fireEvent.click(within(screen.getByRole('navigation')).getByRole('button', { name: 'Tech stack' }));
   expect(within(log).getByText('Backend & data')).toBeInTheDocument();

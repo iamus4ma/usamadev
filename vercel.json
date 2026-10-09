@@ -9,6 +9,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/experiments/udev-technologies/fullscreen",
+      "destination": "/index.html"
+    },
+    {
       "source": "/experiments",
       "destination": "/index.html"
     },

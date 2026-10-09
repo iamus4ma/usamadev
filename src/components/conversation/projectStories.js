@@ -56,6 +56,14 @@ export const projectStories = {
     decisions: 'Firebase handles Google authentication alongside the React, Node.js, Express, and MongoDB stack.',
     result: 'A real-estate application combining authentication, advanced property search, and listing management.',
   },
+  8: {
+    category: 'Business website', steps: ['Explore services', 'Read company details', 'Get in touch'],
+    image: '/projects/eastwinners.jpg', imageLabel: 'Eastwinners home page',
+    problem: 'Present the company’s trading, after-sale, and warehousing services in one clear website.',
+    contribution: 'A responsive business portfolio with service pages, company information, and contact paths.',
+    decisions: 'React and TypeScript provide the interface, with Vite for the build and Tailwind CSS for styling.',
+    result: 'A live website where visitors can explore Eastwinners’ services and contact the company.',
+  },
 };
 
 export const featuredProjectIds = [7, 4, 6];
