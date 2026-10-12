@@ -12,6 +12,7 @@ import Experiments from '../experiments/Experiments';
 import Mascot from '../experiments/Mascot';
 import experiments from '../experiments/registry.json';
 import { Helmet } from 'react-helmet';
+import pages from './pages.json';
 
 const paths = {
   plus: 'M12 5v14M5 12h14',
@@ -129,6 +130,8 @@ export default function Conversation() {
   const [pathname, setPathname] = useState(() => window.location.pathname);
   const isExperiments = pathname === '/experiments' || pathname.startsWith('/experiments/');
   const routeMessage = path => {
+    const topic = Object.keys(pages).find(key => pages[key].path === path.replace(/\/$/, ''));
+    if (topic) return [{ id: `route-${topic}`, prompt: topics.find(item => item.id === topic).prompt, topic }];
     const slug = path.match(/^\/experiments\/([a-z0-9-]+)\/?$/)?.[1];
     if (slug) return [{ id: `route-${slug}`, prompt: `Tell me about ${experiments.find(item => item.slug === slug)?.name || 'this experiment'}`, topic: `experiment:${slug}` }];
     return /^\/experiments\/?$/.test(path) ? [{ id: 'route-experiments', prompt: 'Show me Usama’s experiments', topic: 'experiments' }] : [];
@@ -217,7 +220,7 @@ export default function Conversation() {
   function ask(prompt, topic = matchTopic(prompt), nextTourStep = null) {
     if (!prompt.trim()) return;
     if (topic === 'tour') { startTour(); return; }
-    let nextPath = '/';
+    let nextPath = pages[topic]?.path || '/';
     if (topic === 'experiments') nextPath = '/experiments';
     else if (topic.startsWith('experiment:')) nextPath = `/experiments/${topic.slice(11)}`;
     if (window.location.pathname !== nextPath) window.history.pushState({}, '', nextPath);
@@ -279,18 +282,38 @@ export default function Conversation() {
   }, [menuOpen]);
 
   const selectedExperiment = experiments.find(item => pathname === `/experiments/${item.slug}`);
-  const pageTitle = isExperiments ? `${selectedExperiment?.name || 'Experiments'} | Usama Hassan` : 'Usama Hassan | Full Stack Developer';
-  const canonicalPath = selectedExperiment ? `/experiments/${selectedExperiment.slug}` : isExperiments ? '/experiments' : '/';
+  const page = Object.values(pages).find(item => item.path === pathname.replace(/\/$/, ''));
+  const pageTitle = page?.title || (isExperiments ? `${selectedExperiment?.name || 'Experiments'} | Usama Hassan` : 'Usama Hassan | Full Stack Developer');
+  const pageDescription = page?.description || selectedExperiment?.description || 'Usama Hassan is a full stack developer in Pakistan building web and mobile applications with React, React Native, Expo, and Node.js. Explore his projects, skills, and experience.';
+  const canonicalPath = page?.path || (selectedExperiment ? `/experiments/${selectedExperiment.slug}` : isExperiments ? '/experiments' : '/');
 
   return <div ref={appRef} className="conversation-app" data-chat-theme={dark ? 'dark' : 'light'}>
-    <Helmet><title>{pageTitle}</title><link rel="canonical" href={`https://usamahassan.vercel.app${canonicalPath}`} /></Helmet>
+    <Helmet>
+      <title>{pageTitle}</title>
+      <meta name="description" content={pageDescription} />
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={pageDescription} />
+      <meta property="og:url" content={`https://usamahassan.vercel.app${canonicalPath}`} />
+      <meta name="twitter:title" content={pageTitle} />
+      <meta name="twitter:description" content={pageDescription} />
+      <link rel="canonical" href={`https://usamahassan.vercel.app${canonicalPath}`} />
+    </Helmet>
     <a className="conversation-skip" href="#conversation-main">Skip to conversation</a>
     {menuOpen && <button type="button" className="navigation-backdrop" onClick={closeMenu} aria-label="Close navigation" />}
     <aside ref={sidebarRef} id="portfolio-sidebar" className={`conversation-sidebar ${menuOpen ? 'is-open' : ''}`} aria-label="Portfolio navigation">
       <div className="sidebar-brand"><img className="brand-favicon" src={`${process.env.PUBLIC_URL}/favicon.png`} alt="" width="36" height="36" /><span>usama<span className="brand-muted">Dev</span></span><button className="icon-button mobile-close" onClick={closeMenu} aria-label="Close navigation"><Icon name="close" /></button></div>
       <button className="new-conversation" onClick={reset}><Icon name="plus" />New conversation</button>
       <button className="sidebar-tour" onClick={startTour}><Icon name="spark" />Quick tour<Icon name="external" /></button>
-      <nav aria-label="Explore portfolio"><p className="sidebar-label">Explore</p>{topics.map(topic => <button key={topic.id} className={`topic-nav ${activeTopic === topic.id || (topic.id === 'experiments' && activeTopic?.startsWith('experiment:')) ? 'is-active' : ''}`} aria-current={activeTopic === topic.id || (topic.id === 'experiments' && activeTopic?.startsWith('experiment:')) ? 'true' : undefined} onClick={() => ask(topic.prompt, topic.id)}><Icon name={topic.icon} /><span>{topic.label}</span>{topic.id === 'projects' && <small>{projects.length}</small>}</button>)}</nav>
+      <nav aria-label="Explore portfolio"><p className="sidebar-label">Explore</p>{topics.map(topic => {
+        const href = pages[topic.id]?.path || (topic.id === 'experiments' ? '/experiments' : null);
+        const Tag = href ? 'a' : 'button';
+        const active = activeTopic === topic.id || (topic.id === 'experiments' && activeTopic?.startsWith('experiment:'));
+        return <Tag key={topic.id} href={href || undefined} className={`topic-nav ${active ? 'is-active' : ''}`} aria-current={active ? 'true' : undefined} onClick={event => {
+          if (href && (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0)) return;
+          event.preventDefault();
+          ask(topic.prompt, topic.id);
+        }}><Icon name={topic.icon} /><span>{topic.label}</span>{topic.id === 'projects' && <small>{projects.length}</small>}</Tag>;
+      })}</nav>
       <div className="sidebar-bottom"><div className="sidebar-socials"><ExternalLink href="https://github.com/iamus4ma">GitHub</ExternalLink><ExternalLink href="https://www.linkedin.com/in/iamus4ma/">LinkedIn</ExternalLink></div><div className="sidebar-profile"><img src={portrait} alt="Usama Hassan" width="38" height="38" /><div><strong>Usama Hassan</strong><span>Full Stack Developer</span></div><button className="icon-button" onClick={() => setDark(value => !value)} aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}><Icon name={dark ? 'sun' : 'moon'} /></button></div></div>
     </aside>
     <div className="conversation-workspace">

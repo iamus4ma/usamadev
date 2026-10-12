@@ -19,6 +19,18 @@
     {
       "source": "/experiments/:path*",
       "destination": "/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/projects",
+      "destination": "/projects.html"
+    },
+    {
+      "source": "/experience",
+      "destination": "/experience.html"
     }
   ]
 }

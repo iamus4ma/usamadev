@@ -27,13 +27,13 @@ test.each(['/experiments', '/experiments/'])('direct index route %s opens a prep
   window.history.replaceState({}, '', pathname);
   render(<Conversation />);
   expect(screen.getByRole('heading', { name: 'Small ideas. Room to play.' })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Experiments' })).toHaveAttribute('aria-current', 'true');
+  expect(screen.getByRole('link', { name: 'Experiments' })).toHaveAttribute('aria-current', 'true');
   expect(screen.getByRole('textbox')).toBeInTheDocument();
   fireEvent.click(screen.getAllByRole('button', { name: /Explore demo/ })[0]);
   expect(window.location.pathname).toBe('/experiments/pixel-pong');
   expect(screen.getByTitle('Pixel Pong live experiment')).toBeInTheDocument();
-  fireEvent.click(within(screen.getByRole('navigation', { name: 'Explore portfolio' })).getByRole('button', { name: 'About Usama' }));
-  expect(window.location.pathname).toBe('/');
+  fireEvent.click(within(screen.getByRole('navigation', { name: 'Explore portfolio' })).getByRole('link', { name: 'About Usama' }));
+  expect(window.location.pathname).toBe('/about');
   expect(screen.getByRole('textbox')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'A little about Usama.' })).toBeInTheDocument();
   expect(within(document.querySelector('.about-photo')).getByRole('button', { name: 'Say hello to Usama' })).toBeInTheDocument();

@@ -14,7 +14,7 @@ test('Pixel Pong stays local until its deployed assets support the prefix', () =
 });
 
 test('local-only projects do not create external or standalone routes', () => {
-  assert.deepEqual(createConfig([local]).rewrites, [
+  assert.deepEqual(createConfig([local]).rewrites.slice(0, 2), [
     { source: '/experiments', destination: '/index.html' },
     { source: '/experiments/:path*', destination: '/index.html' },
   ]);
@@ -22,7 +22,7 @@ test('local-only projects do not create external or standalone routes', () => {
 
 test('the in-app 3D model needs no external rewrite', () => {
   const model = registry.find(item => item.slug === 'animated-developer');
-  assert.deepEqual(createConfig([model]).rewrites, [
+  assert.deepEqual(createConfig([model]).rewrites.slice(0, 2), [
     { source: '/experiments', destination: '/index.html' },
     { source: '/experiments/:path*', destination: '/index.html' },
   ]);

@@ -11,7 +11,31 @@ function setReducedMotion(reduced) {
   }));
 }
 
-beforeEach(() => { localStorage.clear(); setReducedMotion(true); });
+beforeEach(() => { window.history.replaceState({}, '', '/'); localStorage.clear(); setReducedMotion(true); });
+
+test.each([
+  ['/about', 'A little about Usama.'],
+  ['/projects', 'Ideas turned into working products.'],
+  ['/experience', 'My journey so far.'],
+])('opens %s directly without a prompt', (path, heading) => {
+  window.history.replaceState({}, '', path);
+  render(<Conversation />);
+  expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument();
+});
+
+test('portfolio links update the URL and browser navigation restores the response', () => {
+  render(<Conversation />);
+  const about = screen.getByRole('link', { name: 'About Usama' });
+  expect(about).toHaveAttribute('href', '/about');
+  fireEvent.click(about);
+  expect(window.location.pathname).toBe('/about');
+  act(() => {
+    window.history.replaceState({}, '', '/experience');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  });
+  expect(screen.getByRole('heading', { name: 'My journey so far.' })).toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'A little about Usama.' })).not.toBeInTheDocument();
+});
 
 test('welcome mascot reacts to clicks', () => {
   render(<Conversation />);

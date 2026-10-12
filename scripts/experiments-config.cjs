@@ -50,6 +50,9 @@ function createConfig(experiments) {
     { source: '/experiments', destination: '/index.html' },
     { source: '/experiments/:path*', destination: '/index.html' },
   );
+  for (const page of Object.values(require('../src/components/conversation/pages.json'))) {
+    rewrites.push({ source: page.path, destination: `${page.path}.html` });
+  }
   return { $schema: 'https://openapi.vercel.sh/vercel.json', framework: 'create-react-app', buildCommand: 'npm run build', outputDirectory: 'build', rewrites };
 }
 

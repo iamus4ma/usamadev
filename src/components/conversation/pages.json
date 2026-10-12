@@ -1,0 +1,17 @@
+{
+  "about": {
+    "path": "/about",
+    "title": "About Usama Hassan | Full Stack Developer",
+    "description": "Usama Hassan is a software engineer and full stack developer in Pakistan building web and mobile applications with React, React Native, Expo, and Node.js."
+  },
+  "projects": {
+    "path": "/projects",
+    "title": "Projects | Usama Hassan",
+    "description": "Explore Usama Hassan's development projects, including real estate, messaging, commerce, and business websites, with screenshots and technical case studies."
+  },
+  "experience": {
+    "path": "/experience",
+    "title": "Experience and Education | Usama Hassan",
+    "description": "Explore Usama Hassan's experience building healthcare web and mobile applications with React and TypeScript, plus his software engineering education."
+  }
+}
