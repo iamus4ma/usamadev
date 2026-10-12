@@ -280,9 +280,10 @@ export default function Conversation() {
 
   const selectedExperiment = experiments.find(item => pathname === `/experiments/${item.slug}`);
   const pageTitle = isExperiments ? `${selectedExperiment?.name || 'Experiments'} | Usama Hassan` : 'Usama Hassan | Full Stack Developer';
+  const canonicalPath = selectedExperiment ? `/experiments/${selectedExperiment.slug}` : isExperiments ? '/experiments' : '/';
 
   return <div ref={appRef} className="conversation-app" data-chat-theme={dark ? 'dark' : 'light'}>
-    <Helmet><title>{pageTitle}</title></Helmet>
+    <Helmet><title>{pageTitle}</title><link rel="canonical" href={`https://usamahassan.vercel.app${canonicalPath}`} /></Helmet>
     <a className="conversation-skip" href="#conversation-main">Skip to conversation</a>
     {menuOpen && <button type="button" className="navigation-backdrop" onClick={closeMenu} aria-label="Close navigation" />}
     <aside ref={sidebarRef} id="portfolio-sidebar" className={`conversation-sidebar ${menuOpen ? 'is-open' : ''}`} aria-label="Portfolio navigation">
