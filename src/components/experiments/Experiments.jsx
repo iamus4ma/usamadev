@@ -15,7 +15,7 @@ function ExperimentCatalog({ onSelect }) {
         <p>{experiment.description}</p>
         <ul className="tech-tags" aria-label={`${experiment.name} technologies`}>{experiment.technologies.map(technology => <li key={technology}>{technology}</li>)}</ul>
       </div>
-      <button type="button" onClick={() => onSelect(experiment)}>{experiment.status === 'local' ? 'View project' : 'Explore demo'} <span aria-hidden="true">↗</span></button>
+      <a className="experiment-open" href={`/experiments/${experiment.slug}`} onClick={event => { if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return; event.preventDefault(); onSelect(experiment); }}>{experiment.status === 'local' ? 'View project' : 'Explore demo'} <span aria-hidden="true">↗</span></a>
     </article>)}</div>
   </div>;
 }

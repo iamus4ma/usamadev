@@ -32,6 +32,7 @@
     "experiments:sync": "node scripts/experiments-config.cjs",
     "experiments:check": "node scripts/experiments-config.cjs --check",
     "test:experiments": "node --test scripts/experiments-config.test.cjs",
+    "test:seo": "node --test scripts/seo-content.test.cjs",
     "prebuild": "npm run experiments:check"
   },
   "eslintConfig": {

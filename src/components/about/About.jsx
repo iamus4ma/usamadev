@@ -38,7 +38,7 @@ const About = () => {
 
           <p className="about__description">
             Full Stack Developer with expertise in building responsive web
-            applications and intuitive UI/UX interfaces. I deliver end-to-end
+            applications, mobile apps and intuitive UI/UX interfaces. I deliver end-to-end
             solutions that marry clean frontend design with robust backend
             architecture, serving clients across diverse industries.
           </p>

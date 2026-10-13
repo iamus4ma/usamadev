@@ -16,8 +16,8 @@ afterEach(() => window.history.replaceState({}, '', '/'));
 test('cards distinguish playable and local-only projects', () => {
   render(<Experiments />);
   expect(screen.getAllByRole('article')).toHaveLength(5);
-  expect(screen.getAllByRole('button', { name: /Explore demo/ })).toHaveLength(4);
-  expect(screen.getByRole('button', { name: /View project/ })).toBeInTheDocument();
+  expect(screen.getAllByRole('link', { name: /Explore demo/ })).toHaveLength(4);
+  expect(screen.getByRole('link', { name: /View project/ })).toBeInTheDocument();
   expect(screen.getByText('Local project · no live demo')).toBeInTheDocument();
   expect(screen.queryByText('Example')).not.toBeInTheDocument();
   expect(screen.queryByText('Eastwinners Business Portfolio')).not.toBeInTheDocument();
@@ -29,7 +29,7 @@ test.each(['/experiments', '/experiments/'])('direct index route %s opens a prep
   expect(screen.getByRole('heading', { name: 'Small ideas. Room to play.' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Experiments' })).toHaveAttribute('aria-current', 'true');
   expect(screen.getByRole('textbox')).toBeInTheDocument();
-  fireEvent.click(screen.getAllByRole('button', { name: /Explore demo/ })[0]);
+  fireEvent.click(screen.getAllByRole('link', { name: /Explore demo/ })[0]);
   expect(window.location.pathname).toBe('/experiments/pixel-pong');
   expect(screen.getByTitle('Pixel Pong live experiment')).toBeInTheDocument();
   fireEvent.click(within(screen.getByRole('navigation', { name: 'Explore portfolio' })).getByRole('link', { name: 'About Usama' }));

@@ -31,12 +31,12 @@ function experimentRewrites(experiment, slugs) {
     return [];
   }
   const { origin, prefix } = validateDeployment(experiment);
-  if (status === 'pending') return [{ source: `${prefix}/fullscreen`, destination: '/index.html' }];
+  if (status === 'pending') return [{ source: `${prefix}/fullscreen`, destination: '/app-shell.html' }];
   if (status !== 'ready') return [];
   if (origin.hostname.endsWith('.example.com') || github.pathname.includes('YOUR_USERNAME')) throw new Error(`Replace example URLs before enabling ${slug}`);
   const destination = `${origin.origin}${upstreamPath}`;
   return [
-    { source: `${prefix}/fullscreen`, destination: '/index.html' },
+    { source: `${prefix}/fullscreen`, destination: '/app-shell.html' },
     { source: prefix, destination: `${destination}/` },
     { source: `${prefix}/:path*`, destination: `${destination}/:path*` },
   ];
@@ -47,13 +47,17 @@ function createConfig(experiments) {
   const rewrites = experiments.flatMap(experiment => experimentRewrites(experiment, slugs));
   // External mounts must precede the portfolio's local experiment pages.
   rewrites.push(
-    { source: '/experiments', destination: '/index.html' },
-    { source: '/experiments/:path*', destination: '/index.html' },
+    { source: '/experiments', destination: '/experiments.html' },
+    { source: '/experiments/:path*', destination: '/app-shell.html' },
   );
   for (const page of Object.values(require('../src/components/conversation/pages.json'))) {
+    if (page.path === '/experiments') continue;
     rewrites.push({ source: page.path, destination: `${page.path}.html` });
   }
-  return { $schema: 'https://openapi.vercel.sh/vercel.json', framework: 'create-react-app', buildCommand: 'npm run build', outputDirectory: 'build', rewrites };
+  const redirects = Object.values(require('../src/components/conversation/pages.json')).map(page => ({ source: `${page.path}.html`, destination: page.path, permanent: true }));
+  redirects.push({ source: '/index.html', destination: '/', permanent: true });
+  const headers = [{ source: '/experiments/:slug/fullscreen', headers: [{ key: 'X-Robots-Tag', value: 'noindex' }] }];
+  return { $schema: 'https://openapi.vercel.sh/vercel.json', framework: 'create-react-app', buildCommand: 'npm run build', outputDirectory: 'build', rewrites, redirects, headers };
 }
 
 if (require.main === module) {

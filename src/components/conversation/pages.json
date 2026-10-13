@@ -1,8 +1,13 @@
 {
+  "experiments": {
+    "path": "/experiments",
+    "title": "Interactive Experiments | Usama Hassan",
+    "description": "Explore Usama Hassan's interactive experiments: Pixel Pong, a 3D developer, a cursor-tracking mascot, and technology website prototypes."
+  },
   "about": {
     "path": "/about",
-    "title": "About Usama Hassan | Full Stack Developer",
-    "description": "Usama Hassan is a software engineer and full stack developer in Pakistan building web and mobile applications with React, React Native, Expo, and Node.js."
+    "title": "About Usama Hassan | Software Engineer & Full Stack Developer",
+    "description": "Usama Hassan (iamus4ma) is a software engineer and full stack developer in Pakistan building web and mobile applications with React, React Native, Expo, and Node.js."
   },
   "projects": {
     "path": "/projects",

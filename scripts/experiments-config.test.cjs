@@ -10,21 +10,21 @@ test('Pixel Pong stays local until its deployed assets support the prefix', () =
   assert.equal(pong.status, 'pending');
   assert.ok(!createConfig([pong]).rewrites.some(rule => rule.destination.startsWith('https:')));
   assert.equal(createConfig([{ ...pong, status: 'ready' }]).rewrites[2].destination, 'https://pixel-pong-six.vercel.app/:path*');
-  assert.deepEqual(createConfig([pong]).rewrites[0], { source: '/experiments/pixel-pong/fullscreen', destination: '/index.html' });
+  assert.deepEqual(createConfig([pong]).rewrites[0], { source: '/experiments/pixel-pong/fullscreen', destination: '/app-shell.html' });
 });
 
 test('local-only projects do not create external or standalone routes', () => {
   assert.deepEqual(createConfig([local]).rewrites.slice(0, 2), [
-    { source: '/experiments', destination: '/index.html' },
-    { source: '/experiments/:path*', destination: '/index.html' },
+    { source: '/experiments', destination: '/experiments.html' },
+    { source: '/experiments/:path*', destination: '/app-shell.html' },
   ]);
 });
 
 test('the in-app 3D model needs no external rewrite', () => {
   const model = registry.find(item => item.slug === 'animated-developer');
   assert.deepEqual(createConfig([model]).rewrites.slice(0, 2), [
-    { source: '/experiments', destination: '/index.html' },
-    { source: '/experiments/:path*', destination: '/index.html' },
+    { source: '/experiments', destination: '/experiments.html' },
+    { source: '/experiments/:path*', destination: '/app-shell.html' },
   ]);
   const mascot = registry.find(item => item.slug === 'meet-usama');
   assert.deepEqual(createConfig([mascot]).rewrites, createConfig([model]).rewrites);
@@ -33,7 +33,7 @@ test('the in-app 3D model needs no external rewrite', () => {
 test('root-mounted origins receive both exact and nested routes ahead of SPA fallback', () => {
   const routes = createConfig([ready]).rewrites;
   assert.deepEqual(routes.slice(0, 3), [
-    { source: '/experiments/sample/fullscreen', destination: '/index.html' },
+    { source: '/experiments/sample/fullscreen', destination: '/app-shell.html' },
     { source: '/experiments/sample', destination: 'https://sample-test.vercel.app/' },
     { source: '/experiments/sample/:path*', destination: 'https://sample-test.vercel.app/:path*' },
   ]);
@@ -41,7 +41,7 @@ test('root-mounted origins receive both exact and nested routes ahead of SPA fal
   for (const path of ['some-route', 'assets/main.js', 'static/css/main.css', 'favicon.ico', 'api/example']) {
     assert.equal(routes[2].destination.replace(':path*', path), `https://sample-test.vercel.app/${path}`);
   }
-  assert.equal(routes[3].destination, '/index.html');
+  assert.equal(routes[3].destination, '/experiments.html');
 });
 
 test('prefix-mounted origins preserve their prefix for nested assets and routes', () => {

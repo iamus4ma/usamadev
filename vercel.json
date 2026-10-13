@@ -6,19 +6,19 @@
   "rewrites": [
     {
       "source": "/experiments/pixel-pong/fullscreen",
-      "destination": "/index.html"
+      "destination": "/app-shell.html"
     },
     {
       "source": "/experiments/udev-technologies/fullscreen",
-      "destination": "/index.html"
+      "destination": "/app-shell.html"
     },
     {
       "source": "/experiments",
-      "destination": "/index.html"
+      "destination": "/experiments.html"
     },
     {
       "source": "/experiments/:path*",
-      "destination": "/index.html"
+      "destination": "/app-shell.html"
     },
     {
       "source": "/about",
@@ -31,6 +31,44 @@
     {
       "source": "/experience",
       "destination": "/experience.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/experiments.html",
+      "destination": "/experiments",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/projects.html",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/experience.html",
+      "destination": "/experience",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/experiments/:slug/fullscreen",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
     }
   ]
 }
