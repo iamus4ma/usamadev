@@ -3,6 +3,38 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      #portfolio-splash { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; background: #fcfcfa; color: #282924; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 180ms ease, visibility 180ms; }
+      html.portfolio-loading #portfolio-splash { opacity: 1; visibility: visible; pointer-events: auto; }
+      html.portfolio-loading #root { visibility: hidden; }
+      html.portfolio-start-dark #portfolio-splash { background: #20211f; color: #eeeee7; color-scheme: dark; }
+      .splash-content { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px; text-align: center; font: 14px/1.5 system-ui, sans-serif; }
+      .splash-content img { display: block; width: 56px; height: 56px; border-radius: 14px; }
+      .splash-content p { margin: 0; color: inherit; }
+      .splash-content strong { font-weight: 600; }
+      .splash-dots { display: flex; gap: 6px; height: 12px; align-items: center; }
+      .splash-dots i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .3; animation: splash-pulse 1.2s ease-in-out infinite; }
+      .splash-dots i:nth-child(2) { animation-delay: 150ms; }
+      .splash-dots i:nth-child(3) { animation-delay: 300ms; }
+      @keyframes splash-pulse { 50% { opacity: 1; transform: translateY(-3px); } }
+      @media (prefers-reduced-motion: reduce) { #portfolio-splash { transition: none; } .splash-dots i { animation: none; opacity: .6; } }
+    </style>
+    <script>
+      (function () {
+        var html = document.documentElement;
+        try { if (localStorage.getItem('portfolio-theme') === 'dark') html.classList.add('portfolio-start-dark'); } catch (error) { /* Storage is optional. */ }
+        html.classList.add('portfolio-loading');
+        var timeout = setTimeout(dismiss, 10000);
+        function dismiss() {
+          clearTimeout(timeout);
+          html.classList.remove('portfolio-loading');
+          window.removeEventListener('portfolio:ready', dismiss);
+          var splash = document.getElementById('portfolio-splash');
+          if (splash) splash.setAttribute('aria-hidden', 'true');
+        }
+        window.addEventListener('portfolio:ready', dismiss);
+      })();
+    </script>
     <meta name="theme-color" content="#000000" />
     <meta data-react-helmet="true" name="description" content="Usama Hassan (iamus4ma) is a software engineer and full stack developer in Pakistan building web and mobile apps with React, React Native, TypeScript, and Node.js." />
     <meta name="author" content="Usama Hassan" />
@@ -32,6 +64,13 @@
     <title>Usama Hassan | Software Engineer &amp; Full Stack Developer</title>
   </head>
   <body>
+    <div id="portfolio-splash" role="status" aria-live="polite" aria-label="Loading Usama's portfolio">
+      <div class="splash-content">
+        <img src="%PUBLIC_URL%/favicon.png" alt="" width="56" height="56" />
+        <p><strong>Usama Hassan</strong><br />Getting the conversation ready.</p>
+        <span class="splash-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+    </div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
